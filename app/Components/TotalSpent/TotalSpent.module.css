@@ -1,0 +1,7 @@
+.spent-this-month {
+    padding: 20px;
+}
+
+.total {
+    color: var(--accent);
+}
