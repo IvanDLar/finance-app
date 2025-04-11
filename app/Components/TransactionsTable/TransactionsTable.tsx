@@ -16,6 +16,7 @@ type TransactionsTableProps = {
     data: Transaction[];
 }
 
+
 export default function TransactionsTable ({data}: TransactionsTableProps) {
     const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
         () => [
