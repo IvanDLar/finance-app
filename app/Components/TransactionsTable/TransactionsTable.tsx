@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -47,6 +47,7 @@ export default function TransactionsTable ({data}: TransactionsTableProps) {
         columns,
         data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableGlobalFilter: false, //disable search feature
+        initialState: { pagination: { pageSize: 5, pageIndex: 0 } },
         });
 
       return <MaterialReactTable table={table} />;

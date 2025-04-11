@@ -1,0 +1,92 @@
+.page {
+  display: grid;
+  grid-template-rows: 0.5fr 0.5fr 2fr;
+  align-items: center;
+  justify-items: center;
+  font-family: var(--font-geist-sans);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-row-start: 2;
+}
+
+.total-spent__section {
+  width: 100%;
+  justify-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow:  0px 20px 22px -20px rgba(0,0,0,0.20);
+}
+
+.information__section {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  align-items: center;
+  justify-items: center;
+}
+
+.information__graph {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  padding: 30px;
+  border-radius: 25px;
+  margin-right: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+.information__table {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  padding: 30px;
+  border-radius: 25px;
+  margin-left: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  a.primary:hover {
+    background: var(--button-primary-hover);
+    border-color: transparent;
+  }
+
+  a.secondary:hover {
+    background: var(--button-secondary-hover);
+    border-color: transparent;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px;
+    padding-bottom: 80px;
+  }
+
+  .main {
+    align-items: center;
+  }
+
+  .main {
+    text-align: center;
+  }
+}

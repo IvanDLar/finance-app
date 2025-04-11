@@ -1,5 +1,5 @@
 :root {
-  --background: #f6fef7;
+  --background: #e2f0e4;
   --text: #031c08;
   --gray-text: #6b726c;
   --primary: #47bb5a;
@@ -7,8 +7,13 @@
   --accent: #944deb;
 }
 
-html,
+html {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 body {
+  padding: 80px;
   max-width: 100vw;
   overflow-x: hidden;
 }
