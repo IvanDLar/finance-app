@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^6.6.3",
+    "@datadog/browser-rum-react": "^6.6.3",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.1",
