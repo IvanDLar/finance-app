@@ -10,6 +10,7 @@ type MonthMapType = {
 type DatePickerProps = {
     date: string;
     setDate: Function;
+    setEndDate: Function;
 }
 
 const monthDaysMap:MonthMapType = {
@@ -41,7 +42,7 @@ const monthsMap:MonthMapType = {
     "11": "November",
     "12": "December",
 }
-export default function DatePicker({date, setDate}: DatePickerProps) {
+export default function DatePicker({date, setDate, setEndDate}: DatePickerProps) {
     const [displayDate, setDisplayDate] = useState<string>("January 2025");
     const transformDate = (date:string): void => {
         const [year, month] = date.split("-");
@@ -74,9 +75,11 @@ export default function DatePicker({date, setDate}: DatePickerProps) {
         // Re-build date
         const stringMonth = `${integerMonth < 10 ? "0" : "" }${String(integerMonth)}`;
         const stringDays = monthDaysMap[stringMonth];
-        const newDate = `${String(integerYear)}-${stringMonth}-${stringDays}`;
+        const newDate = `${String(integerYear)}-${stringMonth}-01`;
+        const newEndDate = `${String(integerYear)}-${stringMonth}-${stringDays}`;
 
         setDate(newDate);
+        setEndDate(newEndDate);
         transformDate(date);
     };
 

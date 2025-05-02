@@ -7,7 +7,6 @@ type TransactionsGraphProps = {
 }
 
 export default function SpendingGraph({chartCountArray}: TransactionsGraphProps) {
-    console.log("IN THE ELEMENT", chartCountArray)
     return(
         <Chart
             chartType="PieChart"

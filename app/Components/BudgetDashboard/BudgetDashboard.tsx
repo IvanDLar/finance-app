@@ -19,21 +19,22 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
  // replace date with startDate and set it to that. Create a new endDate state to control the querying of the data.
 
   // TODO
-  const [date, setDate] = useState<string>("2025-01");
+  const [date, setDate] = useState<string>("2025-01-01");
+  const [endDate, setEndDate] = useState<string>("2025-01-31")
   const [data, setData] = useState<Transaction[]>(transactions);
   const [total, setTotal] = useState<number>(0);
   const [chartCountArray, setChartCountArray] = useState<(string | number)[][]>();
 
-  console.log(date)
-  const getMonthTransactions = async(date:string) => {
+  const getMonthTransactions = async(date:string, endDate:string) => {
     try {
-      const response = await fetch('http://localhost:3000/api/transactions/all-per-month?start=2025-01-01&end=2025-01-31', {
+      const response = await fetch(`http://localhost:3000/api/transactions/all-per-month?start=${date}&end=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         }
       })
       const transactionsRequest = await response.json();
+      console.log(transactionsRequest.transactions);
       setData(transactionsRequest.transactions);
     }
     catch(err) {
@@ -41,9 +42,9 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
     }
   };
 
-  const getMonthTransactionSum = async(date:string) => {
+  const getMonthTransactionSum = async(date:string, endDate:string) => {
     try {
-      const response = await fetch('http://localhost:3000/api/transactions/sum-per-month', {
+      const response = await fetch(`http://localhost:3000/api/transactions/sum-per-month?start=${date}&end=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -51,16 +52,16 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
       })
       const sumRequest = await response.json();
       const [requestData] = sumRequest.data;
-      setTotal(requestData["TransactionsSum"]);
+      setTotal(Math.round(requestData["TransactionsSum"]));
     }
     catch(err) {
       console.log(err);
     }
   };
 
-  const getMonthTransactionCategoryCount = async(date:string): Promise<[{ category: string; count: number; }] | undefined> => {
+  const getMonthTransactionCategoryCount = async(date:string, endDate:string): Promise<[{ category: string; count: number; }] | undefined> => {
     try {
-      const response = await fetch('http://localhost:3000/api/transactions/category-count', {
+      const response = await fetch(`http://localhost:3000/api/transactions/category-count?start=${date}&end=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -77,10 +78,10 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
       console.log(err);
     }
   };
-  const getDashboardData = async (date:string) => {
-    await getMonthTransactions(date);
-    await getMonthTransactionSum(date);
-    const categoryCountArray = await getMonthTransactionCategoryCount(date);
+  const getDashboardData = async (date:string, endDate:string) => {
+    await getMonthTransactions(date, endDate);
+    await getMonthTransactionSum(date, endDate);
+    const categoryCountArray = await getMonthTransactionCategoryCount(date, endDate);
 
     const newBuildGraphArray = (categoryCountArray:[{ category: string; count: number; }] | undefined) => {
       const newChartCountArray = [];
@@ -96,12 +97,12 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
     newBuildGraphArray(categoryCountArray);
   }
   useEffect(() => {
-    getDashboardData(date);
-  }, [date]);
+    getDashboardData(date, endDate);
+  }, [date, endDate]);
 
   return (
     <div className={styles.page}>
-      <DatePicker date={date} setDate={setDate}/>
+      <DatePicker date={date} setDate={setDate} setEndDate={setEndDate}/>
       <div className={styles["total-spent__section"]}>
         <TotalSpent total={total}/>
       </div>
