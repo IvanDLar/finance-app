@@ -6,85 +6,97 @@ import TotalSpent from "../TotalSpent/TotalSpent";
 import TransactionsTable from "../TransactionsTable/TransactionsTable";
 import SpendingGraph from "../SpendingGraph/SpendingGraph";
 import { useState, useEffect } from "react";
-
-type Transaction = {
-  date: string;
-  amount: number;
-  payee: string;
-  category: string;
-}
+import { Transaction } from "@/app/Types/Transactions";
+import Link from "next/link";
 
 type BudgetDashboardProps = {
   transactions: Transaction[];
 }
 
 export default function BudgetDashboard({ transactions }: BudgetDashboardProps) {
+  // TODO
+
+ // replace date with startDate and set it to that. Create a new endDate state to control the querying of the data.
+
+  // TODO
   const [date, setDate] = useState<string>("2025-01");
   const [data, setData] = useState<Transaction[]>(transactions);
   const [total, setTotal] = useState<number>(0);
   const [chartCountArray, setChartCountArray] = useState<(string | number)[][]>();
 
-  const filterDataPerMonth = (date:string) => {
-    let newTotal = 0;
-    let newTransactionsArray: Transaction[] = [];
-    let monthRegEx = new RegExp(`${date}-*`)
-    let foundFirst = false;
-    let categoryCountMap = new Map();
-
-    // Dummy logic, it would be much better to rather pre-process the data and store
-    // it in a more complex but more efficient patter.
-    /* Parse the JSON to store in keys with the YYYY-MM as key, all in the while
-    generating a new json that stores the total per month (to access directly).
-
-    If a transaction is added/removed to the transactions json, just add/remove that from
-    the total, instead of having to recalculate everything over and over again.
-    */
-    for (let i = 0; i < transactions.length; i++) {
-        let transaction = transactions[i];
-        const transactionCategory = transaction.category;
-        if (foundFirst) {
-            newTotal += transaction.amount;
-            newTransactionsArray.push(transaction);
-
-            // Set Category
-            if (categoryCountMap.has(transactionCategory)) {
-              const newTransactionCategoryCount = categoryCountMap.get(transactionCategory) + 1;
-              categoryCountMap.set(transactionCategory,newTransactionCategoryCount);
-            } else {
-                categoryCountMap.set(transactionCategory, 1);
-            }
-
-            // Break out of the loop once the next date does not match!
-            if(!monthRegEx.exec(transactions[i + 1]?.date)) {
-                break;
-            }
+  console.log(date)
+  const getMonthTransactions = async(date:string) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/transactions/all-per-month?start=2025-01-01&end=2025-01-31', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else if (!foundFirst) {
-            let isSearchMonth = monthRegEx.exec(transaction?.date);
-            if (isSearchMonth) {
-                foundFirst = true;
-                newTotal += transaction.amount;
-                newTransactionsArray.push(transaction);
-                categoryCountMap.set(transactionCategory, 1);
-            }
-        }
+      })
+      const transactionsRequest = await response.json();
+      setData(transactionsRequest.transactions);
     }
-    buildGraphArray(categoryCountMap);
-    setData(newTransactionsArray);
-    setTotal(Math.ceil(newTotal * 100) / 100);
+    catch(err) {
+      console.log(err);
+    }
   };
 
-  const buildGraphArray = (categoryCountMap:Map<string, number>) => {
-    const newChartCountArray = [];
-    for (let [key, value] of categoryCountMap) {
-        newChartCountArray.push([key, value]);
+  const getMonthTransactionSum = async(date:string) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/transactions/sum-per-month', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const sumRequest = await response.json();
+      const [requestData] = sumRequest.data;
+      setTotal(requestData["TransactionsSum"]);
     }
-    newChartCountArray.unshift(["Categories", "Transaction Count"]);
-    setChartCountArray(newChartCountArray);
+    catch(err) {
+      console.log(err);
+    }
   };
 
+  const getMonthTransactionCategoryCount = async(date:string): Promise<[{ category: string; count: number; }] | undefined> => {
+    try {
+      const response = await fetch('http://localhost:3000/api/transactions/category-count', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const categoryCountRequest = await response.json();
+
+      if (categoryCountRequest.data) {
+        const categoryCountArray = categoryCountRequest.data;
+        return categoryCountArray;
+      }
+    }
+    catch(err) {
+      console.log(err);
+    }
+  };
+  const getDashboardData = async (date:string) => {
+    await getMonthTransactions(date);
+    await getMonthTransactionSum(date);
+    const categoryCountArray = await getMonthTransactionCategoryCount(date);
+
+    const newBuildGraphArray = (categoryCountArray:[{ category: string; count: number; }] | undefined) => {
+      const newChartCountArray = [];
+      if (categoryCountArray !== undefined) {
+        for (let element of categoryCountArray) {
+          newChartCountArray.push([element.category, Number(element.count)]);
+      }
+      newChartCountArray.unshift(["Categories", "Transaction Count"]);
+      setChartCountArray(newChartCountArray);
+      }
+    };
+
+    newBuildGraphArray(categoryCountArray);
+  }
   useEffect(() => {
-    filterDataPerMonth(date);
+    getDashboardData(date);
   }, [date]);
 
   return (
@@ -107,6 +119,9 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
             <TransactionsTable data={data}/>
           </div>
       </div>
+      <Link href={"/add-transaction"}>
+        Add Transaction
+      </Link>
     </div>
   );
 }

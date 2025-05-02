@@ -4,13 +4,7 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
-
-type Transaction = {
-    date: string;
-    amount: number;
-    payee: string;
-    category: string;
-}
+import { Transaction } from '@/app/Types/Transactions';
 
 type TransactionsTableProps = {
     data: Transaction[];
