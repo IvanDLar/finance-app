@@ -80,6 +80,10 @@ export default function DatePicker({date, setDate, setEndDate}: DatePickerProps)
 
         setDate(newDate);
         setEndDate(newEndDate);
+        console.log("SATRT: ", newDate);
+        console.log("END: ",newEndDate);
+
+
         transformDate(date);
     };
 

@@ -52,7 +52,7 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
       })
       const sumRequest = await response.json();
       const [requestData] = sumRequest.data;
-      setTotal(Math.round(requestData["TransactionsSum"]));
+      setTotal(Math.round(requestData["TransactionsSum"] * 100) / 100);
     }
     catch(err) {
       console.log(err);

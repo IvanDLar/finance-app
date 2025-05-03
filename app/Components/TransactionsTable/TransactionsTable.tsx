@@ -15,9 +15,10 @@ export default function TransactionsTable ({data}: TransactionsTableProps) {
     const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
         () => [
           {
-            accessorKey: 'date', //access nested data with dot notation
+            accessorFn: (originalRow) => originalRow.date, //access nested data with dot notation
             header: 'Date',
             size: 150,
+            Cell: ({ cell }) => cell.getValue<String>().split("T")[0]
           },
           {
             accessorKey: 'amount',
