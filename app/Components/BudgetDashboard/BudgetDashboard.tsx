@@ -7,13 +7,9 @@ import TransactionsTable from "../TransactionsTable/TransactionsTable";
 import SpendingGraph from "../SpendingGraph/SpendingGraph";
 import { useState, useEffect } from "react";
 import { Transaction } from "@/app/Types/Transactions";
-import Link from "next/link";
+import MyButton from "../Button/Button";
 
-type BudgetDashboardProps = {
-  transactions: Transaction[];
-}
-
-export default function BudgetDashboard({ transactions }: BudgetDashboardProps) {
+export default function BudgetDashboard() {
   // TODO
 
  // replace date with startDate and set it to that. Create a new endDate state to control the querying of the data.
@@ -21,7 +17,7 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
   // TODO
   const [date, setDate] = useState<string>("2025-01-01");
   const [endDate, setEndDate] = useState<string>("2025-01-31")
-  const [data, setData] = useState<Transaction[]>(transactions);
+  const [data, setData] = useState<Transaction[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [chartCountArray, setChartCountArray] = useState<(string | number)[][]>();
 
@@ -34,7 +30,6 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
         }
       })
       const transactionsRequest = await response.json();
-      console.log(transactionsRequest.transactions);
       setData(transactionsRequest.transactions);
     }
     catch(err) {
@@ -120,9 +115,9 @@ export default function BudgetDashboard({ transactions }: BudgetDashboardProps) 
             <TransactionsTable data={data}/>
           </div>
       </div>
-      <Link href={"/add-transaction"}>
-        Add Transaction
-      </Link>
+      <div className={styles["add-transaction__section"]}>
+        <MyButton url="/add-transaction" text="Add Transaction"/>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,22 @@
+
+.main-button-link {
+    text-decoration: none;
+    width: 200px;
+    height: 40px;
+}
+
+.main-button {
+    color: white;
+    width: 200px;
+    height: 40px;
+    background-color: var(--accent);
+    font-size: var(--lead-text);
+    font-weight: 600;
+    font-family: var(--font-geist-sans);
+    border-color: var(--accent-light) var(--accent) var(--accent-dark);
+    border-radius: 10px;
+}
+
+.main-button:hover {
+    cursor: pointer;
+}

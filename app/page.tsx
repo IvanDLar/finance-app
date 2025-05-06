@@ -1,10 +1,13 @@
 "use client"
 
 import BudgetDashboard from "./Components/BudgetDashboard/BudgetDashboard";
-import data from "../Database/transactions.json";
+import Navbar from "./Components/Navbar/Navbar";
 
 export default function Home() {
   return (
-      <BudgetDashboard transactions={data}/>
+      <>
+        <Navbar/>
+        <BudgetDashboard />
+      </>
   );
 }
