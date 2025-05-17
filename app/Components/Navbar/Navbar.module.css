@@ -26,3 +26,12 @@
     width: 50%;
     justify-content: space-around;
 }
+
+.navbar__menu_section_element {
+    transition: text-decoration 0.75s ease-in;
+    text-decoration: underline 0.15em rgba(0, 0, 0, 0);;
+}
+
+.navbar__menu_section_element:hover {
+    text-decoration-color: var(--accent)
+}

@@ -73,7 +73,7 @@ export default function BudgetDashboard() {
       console.log(err);
     }
   };
-  const getDashboardData = async (date:string, endDate:string) => {
+  const getDashboardData = async (date:string, endDate:string) : Promise<void> => {
     await getMonthTransactions(date, endDate);
     await getMonthTransactionSum(date, endDate);
     const categoryCountArray = await getMonthTransactionCategoryCount(date, endDate);
@@ -92,7 +92,10 @@ export default function BudgetDashboard() {
     newBuildGraphArray(categoryCountArray);
   }
   useEffect(() => {
-    getDashboardData(date, endDate);
+    const updateDashboardData = async () => {
+      await getDashboardData(date, endDate);
+    }
+    updateDashboardData();
   }, [date, endDate]);
 
   return (
@@ -112,7 +115,7 @@ export default function BudgetDashboard() {
             <h2>
               Transactions this month
             </h2>
-            <TransactionsTable data={data}/>
+            <TransactionsTable date= {date} endDate = {endDate} getDashboardData={getDashboardData} data={data}/>
           </div>
       </div>
       <div className={styles["add-transaction__section"]}>

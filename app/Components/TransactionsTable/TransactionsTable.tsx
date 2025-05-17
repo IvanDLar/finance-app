@@ -1,17 +1,39 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   MaterialReactTable,
   useMaterialReactTable,
+  MRT_ActionMenuItem,
   type MRT_ColumnDef,
 } from 'material-react-table';
 import { Transaction } from '@/app/Types/Transactions';
+import { Edit, Delete } from '@mui/icons-material';
+
 
 type TransactionsTableProps = {
+    date: string,
+    endDate: string,
+    getDashboardData: Function,
     data: Transaction[];
 }
 
 
-export default function TransactionsTable ({data}: TransactionsTableProps) {
+export default function TransactionsTable ({date, endDate, getDashboardData, data}: TransactionsTableProps) {
+    const handleDeleteTransaction = async (id: number) => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/transactions/delete?id=${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+        await response.json();
+        await getDashboardData(date, endDate);
+      }
+      catch(err) {
+        console.log(err);
+      }
+    };
+
     const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
         () => [
           {
@@ -43,6 +65,16 @@ export default function TransactionsTable ({data}: TransactionsTableProps) {
         columns,
         data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableGlobalFilter: false, //disable search feature
+        enableRowActions: true,
+        renderRowActions: ({ row, table }) => [
+          <MRT_ActionMenuItem
+           icon={<Delete/>}
+           key="delete"
+           label=""
+           onClick={() => handleDeleteTransaction(row.original.id)}
+           table = {table}
+           />,
+        ],
         initialState: { pagination: { pageSize: 5, pageIndex: 0 } },
         });
 

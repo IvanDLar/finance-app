@@ -5,12 +5,11 @@ import sql from "@/Database/db";
 export async function POST(req: NextRequest) {
     try {
         const data = await req.json();
-
+        if (!data.date || !data.amount || !data.payee || !data.category) {
+            return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
+        }
         const insertTransaction = async(data: Transaction) => {
             try {
-                if (!data.date || !data.amount || !data.payee || !data.category) {
-                    return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
-                }
                 const result = await sql`
                     INSERT INTO Transaction (date, amount, payee, category)
                     VALUES (
