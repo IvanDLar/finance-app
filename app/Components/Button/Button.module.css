@@ -20,3 +20,10 @@
 .main-button:hover {
     cursor: pointer;
 }
+
+.main-button:disabled {
+    cursor: default;
+    background-color: #cccccc;
+    color: #848484;
+    border-color: #cccccc;
+}

@@ -1,11 +1,12 @@
 "use client"
 
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './page.module.css';
 import _ from 'underscore';
+import MyButton from '../Components/Button/Button';
 
 interface Transaction {
     date: string;
@@ -83,35 +84,38 @@ const AddTransaction = () => (
         {({errors, touched, isValid, dirty}) => (
           <Form className={styles["form"]} onSubmit={ submitForm }>
              <div className={styles["form-element"]}>
-              <label htmlFor="amount">Amount</label>
-              <Field id="amount" name="amount" placeholder="35.99" type = "number" />
-              {errors.amount && touched.amount ? (
-                <div>{errors.amount}</div>
-              ) : null}
+              <label className={styles["form-label"]} htmlFor="amount">Amount</label>
+              <Field className={`${styles["form-input"]} ${(errors.amount && touched.amount) && styles["form-input-error"]}`} id="amount" name="amount" placeholder="35.99" type = "number" />
+              {(errors.amount && touched.amount) &&  (
+                <div className={styles["form-error"]}>{errors.amount}</div>
+              )}
              </div>
 
             <div className={styles["form-element"]}>
-              <label htmlFor="payee">Payee</label>
-              <Field id="payee" name="payee" placeholder="Ivan Diaz" />
-              {errors.payee && touched.payee ? (
-                <div>{errors.payee}</div>
-              ) : null}
+              <label className={styles["form-label"]} htmlFor="payee">Payee</label>
+              <Field className={`${styles["form-input"]} ${(errors.payee && touched.payee) && styles["form-input-error"]}`} id="payee" name="payee" placeholder="Ivan Diaz" />
+              {(errors.payee && touched.payee) &&  (
+                <div className={styles["form-error"]}>{errors.payee}</div>
+              )}
              </div>
             <div className={styles["form-element"]}>
-              <label htmlFor="category">Category</label>
-              <Field id="category" name="category" placeholder="Gaming" />
-              {errors.category && touched.category ? (
-                <div>{errors.category}</div>
-              ) : null}
+              <label className={styles["form-label"]} htmlFor="category">Category</label>
+              <Field className={`${styles["form-input"]} ${(errors.category && touched.category) && styles["form-input-error"]}`} id="category" name="category" placeholder="Gaming" />
+              {(errors.category && touched.category) &&  (
+                <div className={styles["form-error"]}>{errors.category}</div>
+              )}
              </div>
             <div className={styles["form-element"]}>
-              <label htmlFor="date">Date</label>
-              <Field id="date" name="date" placeholder="2024-05-10" type = "date" />
-              {errors.date && touched.date ? (
-                <div>{errors.date}</div>
-              ) : null}
+              <label className={styles["form-label"]} htmlFor="date">Date</label>
+              <Field className={`${styles["form-input"]} ${(errors.date && touched.date) && styles["form-input-error"]}`} id="date" name="date" placeholder="2024-05-10" type = "date" />
+              {(errors.date && touched.date) && (
+                <div className={styles["form-error"]}>{errors.date}</div>
+              )}
              </div>
-            <button className={styles["form-button"]} type="submit" disabled={!(isValid && dirty)}>Submit</button>
+             <div className={styles["form-button"]}>
+              <MyButton text = "Submit" type="submit" isDisabled={!(isValid && dirty)}/>
+             </div>
+            {/* <button className={styles["form-button"]} type="submit" disabled={!(isValid && dirty)}>Submit</button> */}
             <Toaster />
           </Form>
         )}

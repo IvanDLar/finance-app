@@ -6,9 +6,9 @@ CREATE SEQUENCE transactions_id_seq
     CACHE 1;
 
 CREATE TABLE Transaction (
-    "id" INTEGER PRIMARY KEY DEFAULT nextval('transactions_id_seq').
+    "id" INTEGER PRIMARY KEY DEFAULT nextval('transactions_id_seq'),
     "date" DATE NOT NULL,
     "amount" FLOAT(4) NOT NULL,
     "payee" TEXT NOT NULL,
-    "category" TEXT NOT NULL
+    "category" TEXT NOT NULL REFERENCES TransactionCategory(id)
 );

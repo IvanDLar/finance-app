@@ -31,7 +31,31 @@
     flex-direction: column;
 }
 
+.form-label {
+    margin-bottom: 10px;
+}
+
+.form-error {
+    font-size: 14px;
+    margin-top: 5px;
+    color: rgb(255, 55, 55);
+}
+
+.form-input {
+    border-width: 0px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f7f0ff;
+}
+
+.form-input-error {
+    border-width: 2px;
+    border-color: rgb(255, 55, 55);
+}
+
 .form-button {
+    display: flex;
+    justify-content: center;
     grid-column: span 2 / span 2;
 }
 

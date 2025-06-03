@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
         const end = searchParams.get('end');
 
         const results = await sql`
-            SELECT category, COUNT(*) count
+            SELECT category, SUM(amount) sum
             FROM Transaction
             WHERE date BETWEEN ${start} AND ${end}
             GROUP BY category;

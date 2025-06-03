@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./DatePicker.module.css";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 type MonthMapType = {
     [key: string]: string;
@@ -26,7 +27,7 @@ const monthDaysMap:MonthMapType = {
     "10": "31",
     "11": "30",
     "12": "31"
-}
+};
 
 const monthsMap:MonthMapType = {
     "01": "January",
@@ -41,7 +42,8 @@ const monthsMap:MonthMapType = {
     "10": "October",
     "11": "November",
     "12": "December",
-}
+};
+
 export default function DatePicker({date, setDate, setEndDate}: DatePickerProps) {
     const [displayDate, setDisplayDate] = useState<string>("January 2025");
     const transformDate = (date:string): void => {
@@ -75,13 +77,11 @@ export default function DatePicker({date, setDate, setEndDate}: DatePickerProps)
         // Re-build date
         const stringMonth = `${integerMonth < 10 ? "0" : "" }${String(integerMonth)}`;
         const stringDays = monthDaysMap[stringMonth];
-        const newDate = `${String(integerYear)}-${stringMonth}-01`;
-        const newEndDate = `${String(integerYear)}-${stringMonth}-${stringDays}`;
+        const newDate = `${integerYear}-${stringMonth}-01`;
+        const newEndDate = `${integerYear}-${stringMonth}-${stringDays}`;
 
         setDate(newDate);
         setEndDate(newEndDate);
-        console.log("SATRT: ", newDate);
-        console.log("END: ",newEndDate);
 
 
         transformDate(date);
@@ -96,16 +96,16 @@ export default function DatePicker({date, setDate, setEndDate}: DatePickerProps)
     }, [date, displayDate]);
 
     return (
-        <h1>
-            <a className={styles["change-date-arrows"]}
+        <div className={styles["date-picker"]}>
+            <a className={`${styles["change-date-arrows"]} ${styles["left-arrow"]}`}
                 onClick={() => handleDateChange("decrease")}>
-                {"<- "}
+                <ArrowBackIos/>
             </a>
-            {date && displayDate}
-            <a className={styles["change-date-arrows"]}
+            {date && <h1 className={styles["displayed-date"]}>{displayDate}</h1>}
+            <a className={`${styles["change-date-arrows"]} ${styles["right-arrow"]}`}
                 onClick={() => handleDateChange("increase")}>
-                {" ->"}
+                <ArrowForwardIos/>
             </a>
-        </h1>
+        </div>
     );
 };

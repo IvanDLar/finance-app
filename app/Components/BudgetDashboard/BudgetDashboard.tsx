@@ -10,18 +10,32 @@ import { Transaction } from "@/app/Types/Transactions";
 import MyButton from "../Button/Button";
 
 export default function BudgetDashboard() {
-  // TODO
+  // Initialize start and end dates
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
 
- // replace date with startDate and set it to that. Create a new endDate state to control the querying of the data.
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
 
-  // TODO
-  const [date, setDate] = useState<string>("2025-01-01");
-  const [endDate, setEndDate] = useState<string>("2025-01-31")
+  // Format as YYYY-MM-DD in local time zone
+  const formatDate = (date: Date) => {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const fullStartDate = formatDate(firstDay); // e.i  2025-05-01
+  const fullEndDate = formatDate(lastDay);   // e.i 2025-05-31
+
+  const [date, setDate] = useState<string>(fullStartDate);
+  const [endDate, setEndDate] = useState<string>(fullEndDate)
   const [data, setData] = useState<Transaction[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [chartCountArray, setChartCountArray] = useState<(string | number)[][]>();
 
-  const getMonthTransactions = async(date:string, endDate:string) => {
+  const getMonthTransactions = async(date:string, endDate:string): Promise<void> => {
     try {
       const response = await fetch(`http://localhost:3000/api/transactions/all-per-month?start=${date}&end=${endDate}`, {
         method: 'GET',
@@ -37,7 +51,8 @@ export default function BudgetDashboard() {
     }
   };
 
-  const getMonthTransactionSum = async(date:string, endDate:string) => {
+  const getMonthTransactionSum = async(date:string, endDate:string): Promise<void>  => {
+    let monthTotalSum : number;
     try {
       const response = await fetch(`http://localhost:3000/api/transactions/sum-per-month?start=${date}&end=${endDate}`, {
         method: 'GET',
@@ -47,6 +62,7 @@ export default function BudgetDashboard() {
       })
       const sumRequest = await response.json();
       const [requestData] = sumRequest.data;
+      monthTotalSum = Math.round(requestData["TransactionsSum"] * 100) / 100;
       setTotal(Math.round(requestData["TransactionsSum"] * 100) / 100);
     }
     catch(err) {
@@ -54,7 +70,7 @@ export default function BudgetDashboard() {
     }
   };
 
-  const getMonthTransactionCategoryCount = async(date:string, endDate:string): Promise<[{ category: string; count: number; }] | undefined> => {
+  const getMonthTransactionCategoryCount = async(date:string, endDate:string): Promise<[{ category: string; sum: number; }] | undefined> => {
     try {
       const response = await fetch(`http://localhost:3000/api/transactions/category-count?start=${date}&end=${endDate}`, {
         method: 'GET',
@@ -73,18 +89,20 @@ export default function BudgetDashboard() {
       console.log(err);
     }
   };
+
+  // Retrieve the data needed to fill the data in the multiple widgets of the dashboard.
   const getDashboardData = async (date:string, endDate:string) : Promise<void> => {
     await getMonthTransactions(date, endDate);
     await getMonthTransactionSum(date, endDate);
     const categoryCountArray = await getMonthTransactionCategoryCount(date, endDate);
 
-    const newBuildGraphArray = (categoryCountArray:[{ category: string; count: number; }] | undefined) => {
+    const newBuildGraphArray = (categoryCountArray:[{ category: string; sum: number; }] | undefined) => {
       const newChartCountArray = [];
       if (categoryCountArray !== undefined) {
         for (let element of categoryCountArray) {
-          newChartCountArray.push([element.category, Number(element.count)]);
+          newChartCountArray.push([element.category, Number(element.sum)]);
       }
-      newChartCountArray.unshift(["Categories", "Transaction Count"]);
+      newChartCountArray.unshift(["Categories", "Transaction Sum"]);
       setChartCountArray(newChartCountArray);
       }
     };
@@ -109,7 +127,7 @@ export default function BudgetDashboard() {
               <h2>
                 Expenses by Category
               </h2>
-              {chartCountArray && <SpendingGraph chartCountArray={chartCountArray}/>}
+              {chartCountArray && <SpendingGraph totalSum = {total} chartCountArray={chartCountArray}/>}
           </div>
           <div className={styles["information__table"]}>
             <h2>
