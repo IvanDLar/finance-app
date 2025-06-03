@@ -59,4 +59,26 @@
     grid-column: span 2 / span 2;
 }
 
+@media (max-width: 600px) {
+  .add-transaction-page {
+    padding: 0 20px 40px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
 
+  .page-title {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .form {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .form-button {
+    grid-column: 1 / -1;
+  }
+}
