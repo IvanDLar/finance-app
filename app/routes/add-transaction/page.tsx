@@ -6,7 +6,7 @@ import { Formik, Field, Form, FormikHelpers } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './page.module.css';
 import _ from 'underscore';
-import MyButton from '../Components/Button/Button';
+import MyButton from '../../Components/Button/Button';
 
 interface Transaction {
     date: string;
@@ -115,7 +115,6 @@ const AddTransaction = () => (
              <div className={styles["form-button"]}>
               <MyButton text = "Submit" type="submit" isDisabled={!(isValid && dirty)}/>
              </div>
-            {/* <button className={styles["form-button"]} type="submit" disabled={!(isValid && dirty)}>Submit</button> */}
             <Toaster />
           </Form>
         )}

@@ -8,6 +8,7 @@ import SpendingGraph from "../SpendingGraph/SpendingGraph";
 import { useState, useEffect } from "react";
 import { Transaction } from "@/app/Types/Transactions";
 import MyButton from "../Button/Button";
+import TransactionVanillaTable from "../TransactionVanillaVanilla.tsx/TransactionTableVanilla";
 
 export default function BudgetDashboard() {
   // Initialize start and end dates
@@ -133,7 +134,8 @@ export default function BudgetDashboard() {
             <h2>
               Transactions this month
             </h2>
-            <TransactionsTable date= {date} endDate = {endDate} getDashboardData={getDashboardData} data={data}/>
+            <TransactionVanillaTable date= {date} endDate = {endDate} getDashboardData={getDashboardData} data={data}/>
+            {/* <TransactionsTable date= {date} endDate = {endDate} getDashboardData={getDashboardData} data={data}/> */}
           </div>
       </div>
       <div className={styles["add-transaction__section"]}>
