@@ -12,7 +12,7 @@
 }
 
 .change-date-arrows.disabled {
-    color: lightslategray;
+    visibility: hidden;
 }
 
 .change-date-arrows.disabled:hover {

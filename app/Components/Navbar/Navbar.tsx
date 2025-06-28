@@ -9,7 +9,7 @@ const Navbar = () => {
                 LOGO
             </div>
             <div className={styles["navbar__menu_section"]}>
-                <Link className={styles["navbar__menu_section_element"]} href={"/"}>
+                <Link className={styles["navbar__menu_section_element"]} href={"/routes/home"}>
                     Home
                 </Link>
                 <Link className={styles["navbar__menu_section_element"]} href={""}>

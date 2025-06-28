@@ -26,9 +26,9 @@ const TransactionVanillaTable = ({date, endDate, getDashboardData, data}: Transa
         const endIndex = data[startIndex + 5] ? startIndex + 5 : data.length;
         const currentPageData = data.slice(startIndex, endIndex);
 
-        if (currPage === 0 || availablePages === -1) setIsArrowDisabled({ ...isArrowDisabled, "left": true });
-        if (currPage === availablePages || availablePages === -1) setIsArrowDisabled({ ...isArrowDisabled, "right": true });
-        if (currPage !== 0 && currPage !== availablePages && availablePages !== -1) setIsArrowDisabled({ "left": false, "right": false });
+        if (currPage === 0) setIsArrowDisabled({"left": true, "right":false });
+        if (currPage === availablePages) setIsArrowDisabled({"left": false, "right": true });
+        if (currPage !== 0 && currPage !== availablePages) setIsArrowDisabled({ "left": false, "right": false });
 
 
         setAvailablePages(availablePages);
@@ -61,10 +61,17 @@ const TransactionVanillaTable = ({date, endDate, getDashboardData, data}: Transa
         }
     };
 
+    const handleResetPage = () => {
+        setCurrPage(0);
+    };
+
     useEffect(() => {
         handlePagination();
-        console.log(isArrowDisabled)
     }, [data, currPage]);
+
+    useEffect(() => {
+        handleResetPage();
+    }, [date])
 
     return(
         <>

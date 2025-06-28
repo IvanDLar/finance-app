@@ -139,7 +139,7 @@ export default function BudgetDashboard() {
           </div>
       </div>
       <div className={styles["add-transaction__section"]}>
-        <MyButton url="/add-transaction" text="Add Transaction"/>
+        <MyButton url="/routes/add-transaction" text="Add Transaction"/>
       </div>
     </div>
   );
