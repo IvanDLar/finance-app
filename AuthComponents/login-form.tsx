@@ -27,13 +27,13 @@ export function LoginForm() {
         password,
       });
       if (error) throw error;
+      router.refresh();
       router.push(ROUTE_HOME);
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setIsLoading(false);
     }
-    router.refresh();
   };
 
   return (
