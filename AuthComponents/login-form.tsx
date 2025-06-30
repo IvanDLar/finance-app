@@ -1,6 +1,6 @@
 "use client";
 
-import "./login-form.css"; // Import the CSS file
+import "./login-form.css";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -27,13 +27,16 @@ export function LoginForm() {
         password,
       });
       if (error) throw error;
+
       router.push(ROUTE_HOME);
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
-    } finally {
-      setIsLoading(false);
     }
-    router.refresh();
+    catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "An error occurred");
+    }
+    finally {
+      setIsLoading(false);
+      // router.refresh();
+    }
   };
 
   return (
