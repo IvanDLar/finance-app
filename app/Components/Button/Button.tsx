@@ -2,27 +2,29 @@
 
 import Link from "next/link";
 import styles from "./Button.module.css";
-import { Button } from "@mui/material";
 
 type ButtonProps = {
     url?: string;
     type?: "button" | "submit" | "reset" | undefined;
     isDisabled?: boolean;
     text: string;
+    size?: string;
+    variant?: string;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const MyButton = ({url, type, isDisabled, text}: ButtonProps) => {
+const MyButton = ({ url, type="button", isDisabled, text, size="medium", variant="main-button", onClick}: ButtonProps) => {
     if (url) {
         return (
-            <Link className={styles["main-button-link"]} href = {url}>
-                <button className={styles["main-button"]} type={type}>
+            <Link className={`${styles["button-link"]}`} href = {url}>
+                <button className={`${styles["button"]} ${styles[variant]} ${styles[size]}`} type={type}>
                     {text}
                 </button>
             </Link>
         );
     } else {
         return (
-            <button className={`${styles["main-button"]}`} disabled={isDisabled} type={type}>
+            <button className={`${styles["button"]} ${styles[variant]} ${styles[size]}`} disabled={isDisabled} type={type} onClick={onClick}>
                 {text}
             </button>
         );

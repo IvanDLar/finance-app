@@ -33,6 +33,7 @@ export function LoginForm() {
     } finally {
       setIsLoading(false);
     }
+    router.refresh();
   };
 
   return (

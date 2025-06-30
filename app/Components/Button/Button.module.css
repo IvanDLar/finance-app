@@ -1,24 +1,32 @@
-
-.main-button-link {
+.button-link {
     text-decoration: none;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button.medium {
     width: 200px;
     height: 40px;
+    font-size: var(--lead-text);
+    border-radius: 10px;
+}
+
+.button.small {
+    width: 80px;
+    height: 30px;
+    font-size: var(--paragraph-text);
+    border-radius: 6px;
 }
 
 .main-button {
     color: white;
-    width: 200px;
-    height: 40px;
     background-color: var(--accent);
     font-size: var(--lead-text);
     font-weight: 600;
     font-family: var(--font-geist-sans);
     border-color: var(--accent-light) var(--accent) var(--accent-dark);
-    border-radius: 10px;
-}
-
-.main-button:hover {
-    cursor: pointer;
 }
 
 .main-button:disabled {
@@ -26,4 +34,13 @@
     background-color: #cccccc;
     color: #848484;
     border-color: #cccccc;
+}
+
+.outlined-button {
+    color: var(--accent);
+    background-color: white;
+    font-size: var(--lead-text);
+    font-weight: 600;
+    font-family: var(--font-geist-sans);
+    border-color: var(--accent)
 }

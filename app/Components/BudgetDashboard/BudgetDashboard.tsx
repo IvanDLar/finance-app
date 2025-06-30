@@ -110,6 +110,7 @@ export default function BudgetDashboard() {
 
     newBuildGraphArray(categoryCountArray);
   }
+
   useEffect(() => {
     const updateDashboardData = async () => {
       await getDashboardData(date, endDate);
