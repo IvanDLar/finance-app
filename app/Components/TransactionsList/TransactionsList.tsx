@@ -7,6 +7,10 @@ type TransactionsTableProps = {
 
 
 const TransactionsList = ({ data } : TransactionsTableProps) => {
+    // const groupTransactionsPerDate = () => {
+
+    // };
+
     return(
         <div>
             {data.map((transaction) => {

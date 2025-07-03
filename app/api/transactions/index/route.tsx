@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
                         ${data.date},
                         ${data.amount},
                         ${data.payee},
-                        ${data.category}
                     )
                     RETURNING *;
                 `;
