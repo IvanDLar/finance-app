@@ -1,16 +1,21 @@
 "use client"
 
+import { useState, useEffect } from "react";
 import styles from "./BudgetDashboard.module.css";
 import DatePicker from "../DatePicker/DatePicker";
-import TotalSpent from "../TotalSpent/TotalSpent";
-import TransactionsTable from "../TransactionsTable/TransactionsTable";
+import TotalSpentWidget from "../TotalSpentWidget/TotalSpentWidget";
 import SpendingGraph from "../SpendingGraph/SpendingGraph";
-import { useState, useEffect } from "react";
 import { Transaction } from "@/app/Types/Transactions";
 import MyButton from "../Button/Button";
 import TransactionVanillaTable from "../TransactionVanillaVanilla.tsx/TransactionTableVanilla";
+import TransactionWidget from "../TransactionWidget/TransactionWidget";
+import TransactionsList from "../TransactionsList/TransactionsList";
 
-export default function BudgetDashboard() {
+interface BudgetDashboardType {
+  session: any;
+};
+
+export default function BudgetDashboard({ session }: BudgetDashboardType) {
   // Initialize start and end dates
   const today = new Date();
   const year = today.getFullYear();
@@ -33,41 +38,47 @@ export default function BudgetDashboard() {
   const [date, setDate] = useState<string>(fullStartDate);
   const [endDate, setEndDate] = useState<string>(fullEndDate)
   const [data, setData] = useState<Transaction[]>([]);
-  const [total, setTotal] = useState<number>(0);
+  const [totalExpense, setTotalExpense] = useState<number>(0);
+  const [totalIncome, setTotalIncome] = useState<number>(0);
   const [chartCountArray, setChartCountArray] = useState<(string | number)[][]>();
 
   const getMonthTransactions = async(date:string, endDate:string): Promise<void> => {
     try {
-      const response = await fetch(`http://localhost:3000/api/transactions/all-per-month?start=${date}&end=${endDate}`, {
+      const response = await fetch(`https://finance-app-three-gamma.vercel.app/api/supa-endpoints/transactions/all-per-month?start=${date}&end=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${session?.access_token}`,
         }
       })
       const transactionsRequest = await response.json();
       setData(transactionsRequest.transactions);
     }
     catch(err) {
-      console.log(err);
+      throw new Error(`[ERROR]: ${err}`);
     }
   };
 
-  const getMonthTransactionSum = async(date:string, endDate:string): Promise<void>  => {
+  const getMonthTransactionSumPerType = async(date:string, endDate:string, type:string): Promise<void>  => {
     let monthTotalSum : number;
     try {
-      const response = await fetch(`http://localhost:3000/api/transactions/sum-per-month?start=${date}&end=${endDate}`, {
+      const isIncome = type === "income";
+      const response = await fetch(`https://finance-app-three-gamma.vercel.app/api/supa-endpoints/transactions/sum-per-month?start=${date}&end=${endDate}&is_income=${isIncome}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${session?.access_token}`,
         }
       })
-      const sumRequest = await response.json();
-      const [requestData] = sumRequest.data;
-      monthTotalSum = Math.round(requestData["TransactionsSum"] * 100) / 100;
-      setTotal(Math.round(requestData["TransactionsSum"] * 100) / 100);
+      const sumRequest= await response.json();
+      const requestData = sumRequest.data;
+      monthTotalSum = Math.round(requestData * 100) / 100;
+
+      if (isIncome) setTotalIncome(monthTotalSum);
+      else setTotalExpense(monthTotalSum);
     }
     catch(err) {
-      console.log(err);
+      throw new Error(`[ERROR]: ${err}`);
     }
   };
 
@@ -87,14 +98,15 @@ export default function BudgetDashboard() {
       }
     }
     catch(err) {
-      console.log(err);
+      throw new Error(`[ERROR]: ${err}`);
     }
   };
 
   // Retrieve the data needed to fill the data in the multiple widgets of the dashboard.
   const getDashboardData = async (date:string, endDate:string) : Promise<void> => {
     await getMonthTransactions(date, endDate);
-    await getMonthTransactionSum(date, endDate);
+    await getMonthTransactionSumPerType(date, endDate, "income");
+    await getMonthTransactionSumPerType(date, endDate, "expense");
     const categoryCountArray = await getMonthTransactionCategoryCount(date, endDate);
 
     const newBuildGraphArray = (categoryCountArray:[{ category: string; sum: number; }] | undefined) => {
@@ -122,21 +134,24 @@ export default function BudgetDashboard() {
     <div className={styles.page}>
       <DatePicker date={date} setDate={setDate} setEndDate={setEndDate}/>
       <div className={styles["total-spent__section"]}>
-        <TotalSpent total={total}/>
+        <TotalSpentWidget total={totalExpense} type="Income"/>
+        <TotalSpentWidget total={totalIncome} type="Expense"/>
       </div>
       <div className={styles["information__section"]}>
           <div className={styles["information__graph"]}>
               <h2>
                 Expenses by Category
               </h2>
-              {chartCountArray && <SpendingGraph totalSum = {total} chartCountArray={chartCountArray}/>}
+              {chartCountArray && <SpendingGraph totalSum = {totalExpense} chartCountArray={chartCountArray}/>}
           </div>
-          <div className={styles["information__table"]}>
+          <div className={styles["transactions__section"]}>
             <h2>
               Transactions this month
             </h2>
-            <TransactionVanillaTable date= {date} endDate = {endDate} getDashboardData={getDashboardData} data={data}/>
-            {/* <TransactionsTable date= {date} endDate = {endDate} getDashboardData={getDashboardData} data={data}/> */}
+            <div>
+              <TransactionsList data={data}/>
+            </div>
+            {/* <TransactionVanillaTable date= {date} endDate = {endDate} getDashboardData={getDashboardData} data={data}/> */}
           </div>
       </div>
       <div className={styles["add-transaction__section"]}>

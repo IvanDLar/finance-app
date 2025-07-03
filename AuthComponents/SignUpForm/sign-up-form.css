@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
   background-color: var(--background);
   min-height: 100vh;
   display: flex;
@@ -9,7 +9,7 @@
   font-family: var(--font-geist-sans);
 }
 
-.login-card {
+.signup-card {
   background-color: white;
   padding: 2rem;
   border-radius: 12px;
@@ -18,36 +18,36 @@
   max-width: 400px;
 }
 
-.login-title {
+.signup-title {
  color: var(--text);
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
 
-.login-description {
-  font-size: var(--paragraph-text);
+.signup-description {
+  font-size: var(--desktop-paragraph-text);
   color: var(--gray-text);
   margin-bottom: 1.5rem;
 }
 
-.login-label {
-  font-size: var(--paragraph-text);
+.signup-label {
+  font-size: var(--desktop-paragraph-text);
   font-weight: 500;
   margin-bottom: 0.25rem;
   display: block;
 }
 
-.login-input {
+.signup-input {
   width: 100%;
   padding: 0.5rem 0.75rem;
-  font-size: var(--paragraph-text);
+  font-size: var(--desktop-paragraph-text);
   border: 1px solid #cdd7ce;
   border-radius: 6px;
   margin-bottom: 1rem;
   outline-color: var(--primary);
 }
 
-.login-link {
+.signup-link {
   font-size: 14px;
   color: var(--accent-dark);
   text-decoration: none;
@@ -55,14 +55,14 @@
   margin-bottom: 1rem;
 }
 
-.login-link:hover {
+.signup-link:hover {
   text-decoration: underline;
 }
 
-.login-button {
+.signup-button {
   background-color: var(--primary);
   color: white;
-  font-size: var(--paragraph-text);
+  font-size: var(--desktop-paragraph-text);
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 6px;
@@ -71,27 +71,27 @@
   transition: background-color 0.3s;
 }
 
-.login-button:hover {
+.signup-button:hover {
   background-color: var(--secondary);
 }
 
-.login-footer {
+.signup-footer {
   margin-top: 1.5rem;
-  font-size: var(--paragraph-text);
+  font-size: var(--desktop-paragraph-text);
   text-align: center;
   color: var(--gray-text);
 }
 
-.login-footer a {
+.signup-footer a {
   color: var(--accent);
   text-decoration: none;
 }
 
-.login-footer a:hover {
+.signup-footer a:hover {
   text-decoration: underline;
 }
 
-.login-error {
+.signup-error {
   color: crimson;
   font-size: 14px;
   margin-bottom: 1rem;

@@ -1,0 +1,43 @@
+.widget {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow:  0px 20px 22px -20px rgba(0,0,0,0.20);
+  width: 45%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.spent-this-month {
+    color: var(--text);
+    font-size: var(--mobile-14);
+    font-weight: 500;
+}
+
+.total {
+    font-size: var(--mobile-16);
+    font-weight: 600;
+}
+
+.total.income-widget {
+    color: var(--primary);
+}
+
+.total.expense-widget {
+    color: crimson;
+}
+
+.transaction-count {
+    color: var(--gray-text);
+    font-size: var(--mobile-12);
+}
+
+@media (max-width: 600px) {
+    .spent-this-month {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

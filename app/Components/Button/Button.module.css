@@ -9,21 +9,21 @@
 .button.medium {
     width: 200px;
     height: 40px;
-    font-size: var(--lead-text);
+    font-size: var(--desktop-lead-text);
     border-radius: 10px;
 }
 
 .button.small {
     width: 80px;
     height: 30px;
-    font-size: var(--paragraph-text);
+    font-size: var(--desktop-paragraph-text);
     border-radius: 6px;
 }
 
 .main-button {
     color: white;
     background-color: var(--accent);
-    font-size: var(--lead-text);
+    font-size: var(--desktop-lead-text);
     font-weight: 600;
     font-family: var(--font-geist-sans);
     border-color: var(--accent-light) var(--accent) var(--accent-dark);
@@ -39,7 +39,7 @@
 .outlined-button {
     color: var(--accent);
     background-color: white;
-    font-size: var(--lead-text);
+    font-size: var(--desktop-lead-text);
     font-weight: 600;
     font-family: var(--font-geist-sans);
     border-color: var(--accent)

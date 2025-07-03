@@ -2,6 +2,7 @@
     width: 32%;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .change-date-arrows:hover {
@@ -26,7 +27,7 @@
 
 @media (max-width: 600px) {
     .date-picker {
-        width: 50%;
+        width: 100%;
         display: flex;
         justify-content: space-around;
     }

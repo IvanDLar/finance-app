@@ -15,11 +15,9 @@
 }
 
 .total-spent__section {
-  width: 100%;
-  justify-items: center;
-  background-color: #fff;
-  border-radius: 20px;
-  box-shadow:  0px 20px 22px -20px rgba(0,0,0,0.20);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .information__section {
@@ -48,8 +46,7 @@
   width: 100%;
 }
 
-.information__table {
-  background-color: white;
+.transactions__section {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -102,14 +99,14 @@
   }
 
   .information__graph,
-  .information__table {
+  .transactions__section {
     width: 100%;
     margin: 0;
     padding: 16px;
   }
 
   .information__graph h2,
-  .information__table h2 {
+  .transactions__section h2 {
     font-size: 1.1rem;
   }
 

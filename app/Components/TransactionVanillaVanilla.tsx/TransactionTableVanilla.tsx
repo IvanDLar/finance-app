@@ -1,6 +1,6 @@
 "use strict"
 
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Transaction } from '@/app/Types/Transactions';
 import { ArrowBackIos, ArrowForwardIos, Delete } from "@mui/icons-material";
 import styles from "./TransactionTableVanilla.module.css";
@@ -21,10 +21,10 @@ const TransactionVanillaTable = ({date, endDate, getDashboardData, data}: Transa
 
     const handlePagination = () => {
         // Ceil to have the amount of pages
-        const availablePages = Math.ceil(data.length / 5) - 1;
+        const availablePages = Math.ceil(data?.length / 5) - 1;
         const startIndex = currPage * 5;
-        const endIndex = data[startIndex + 5] ? startIndex + 5 : data.length;
-        const currentPageData = data.slice(startIndex, endIndex);
+        const endIndex = data[startIndex + 5] ? startIndex + 5 : data?.length;
+        const currentPageData = data?.slice(startIndex, endIndex);
 
         if (currPage === 0) setIsArrowDisabled({"left": true, "right":false });
         if (currPage === availablePages) setIsArrowDisabled({"left": false, "right": true });
@@ -92,7 +92,6 @@ const TransactionVanillaTable = ({date, endDate, getDashboardData, data}: Transa
                             <td>{transaction.date.split("T")[0]}</td>
                             <td>{transaction.amount}</td>
                             <td>{transaction.payee}</td>
-                            <td>{transaction.category}</td>
                             <td onClick={() => handleDeleteTransaction(transaction.id)} className={styles.delete_transaction}>{<Delete/>}</td>
                         </tr>
                     );

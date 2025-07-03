@@ -9,11 +9,17 @@
   --accent: #6480d0;
   --accent-dark: #548376;
 
-  --title-text: 64px;
-  --sub-title-text: 40px;
-  --lead-text: 18px;
-  --section-title: 20px;
-  --paragraph-text: 16px;
+  --desktop-title-text: 64px;
+  --desktop-sub-title-text: 40px;
+  --desktop-lead-text: 18px;
+  --desktop-section-title: 20px;
+  --desktop-paragraph-text: 16px;
+
+  --mobile-30: 30px;
+  --mobile-24: 24px;
+  --mobile-16: 16px;
+  --mobile-14: 14px;
+  --mobile-12: 12px;
 }
 
 html {
@@ -39,7 +45,7 @@ h2, h3, h4, h5 {
 body {
   color: var(--text);
   background: var(--background);
-  font-size: var(--paragraph-text);
+  font-size: var(--desktop-paragraph-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

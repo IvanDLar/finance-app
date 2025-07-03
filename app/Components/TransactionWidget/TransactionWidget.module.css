@@ -1,0 +1,26 @@
+.transaction-widget {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px 10px 15px 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.transaction-amount {
+    font-size: var(--mobile-16);
+    font-weight: 600;
+}
+
+.transaction-amount.expense {
+    color: var(--primary);
+}
+
+.transaction-amount.income {
+    color: crimson;
+}
+
+.class-icon {
+    color: var(--secondary);
+}
