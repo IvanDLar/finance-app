@@ -14,11 +14,11 @@
 }
 
 .transaction-amount.expense {
-    color: var(--primary);
+    color: crimson;
 }
 
 .transaction-amount.income {
-    color: crimson;
+    color: var(--primary);
 }
 
 .class-icon {

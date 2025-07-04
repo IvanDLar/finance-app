@@ -34,3 +34,21 @@
 .navbar__menu_section_element:hover {
     text-decoration-color: var(--accent)
 }
+
+.navbar__profile_icon {
+    color: var(--accent);
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        justify-content: space-around;
+    }
+
+    .navbar__logo_section {
+        display: flex;
+        justify-content: space-around;
+    }
+    .navbar__menu_section {
+        display: none;
+    }
+}

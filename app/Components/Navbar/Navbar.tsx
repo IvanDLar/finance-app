@@ -5,6 +5,7 @@ import CoinLeaf from "../../../public/coinleaf-logo.png"
 import { LogoutButton } from "@/AuthComponents/logout-button";
 import { AuthButton } from "@/AuthComponents/AuthButton/auth-button";
 import { createClient } from "@/lib/supabase/server";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = async () => {
 
@@ -16,9 +17,10 @@ const Navbar = async () => {
 
     return(
         <div className={styles["navbar"]}>
-            <div className={styles["navbar__logo_section"]}>
+            {!user && <div className={styles["navbar__logo_section"]}>
                 <Image src={CoinLeaf} alt="Coinleaf Logo" width={100} height={100} />
-            </div>
+            </div>}
+            {user && <p>Hi, {user.email}</p>}
             <div className={styles["navbar__menu_section"]}>
                 <Link className={styles["navbar__menu_section_element"]} href={"/"}>
                     Home
@@ -29,8 +31,9 @@ const Navbar = async () => {
                 <Link className={styles["navbar__menu_section_element"]} href={""}>
                     History
                 </Link>
-                {user ? <LogoutButton /> : <AuthButton />}
+                {user ? <LogoutButton size="small"/> : <AuthButton />}
             </div>
+            {user && <Link href={"/routes/profile"}> <AccountCircleIcon className={styles["navbar__profile_icon"]}/> </Link>}
         </div>
     );
 }
