@@ -1,5 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import sql from "@/Database/db";
 import { createClient } from "@supabase/supabase-js";
 
 
@@ -12,7 +11,7 @@ export async function GET(req: NextRequest) {
                 JSON.stringify({ error: 'Missing Authorization header' }),
                 { status: 401, headers: { 'Content-Type': 'application/json' } }
             )
-        }
+        };
         const searchParams = req.nextUrl.searchParams;
         const start = searchParams.get('start');
         const end = searchParams.get('end');

@@ -32,8 +32,7 @@ export async function GET(req: NextRequest) {
                 { status: 401, headers: { 'Content-Type': 'application/json' } }
             )
         }
-        // Query transactions for this specific user
-        // Assuming your Transaction table has a user_id column
+
         const { data, error } = await supabaseClient
         .from('Transaction')
         .select('*')
