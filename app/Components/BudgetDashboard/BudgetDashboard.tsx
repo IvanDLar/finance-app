@@ -134,8 +134,8 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
     <div className={styles.page}>
       <DatePicker date={date} setDate={setDate} setEndDate={setEndDate}/>
       <div className={styles["total-spent__section"]}>
-        <TotalSpentWidget total={totalExpense} type="Income"/>
-        <TotalSpentWidget total={totalIncome} type="Expense"/>
+        <TotalSpentWidget total={totalIncome} type="Income"/>
+        <TotalSpentWidget total={totalExpense} type="Expense"/>
       </div>
       <div className={styles["information__section"]}>
           <div className={styles["information__graph"]}>
