@@ -24,7 +24,7 @@ const MobileNavBar = () => {
                 <Link href={"/routes/profile"} className={styles["mobile-navbar-element"]}>
                     <PaymentsIcon className={styles["mobile-navbar__icon"]}/>
                 </Link>
-                <Link href={"/routes/profile"} className={styles["mobile-navbar-element"]}>
+                <Link href={"/"} className={styles["mobile-navbar-element"]}>
                     <HomeRoundedIcon className={styles["mobile-navbar__icon"]}/>
                 </Link>
             </div>
