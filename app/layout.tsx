@@ -3,6 +3,7 @@ import DatadogInit from "./Components/datadog-init";
 import Navbar from "./Components/Navbar/Navbar";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import MobileNavBar from "./Components/Navbar/Mobile/MobileNavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
         <DatadogInit />
         <Navbar/>
         {children}
+        <MobileNavBar/>
       </body>
     </html>
   );
