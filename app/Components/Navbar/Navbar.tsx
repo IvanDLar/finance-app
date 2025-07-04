@@ -20,7 +20,7 @@ const Navbar = async () => {
                 <Image src={CoinLeaf} alt="Coinleaf Logo" width={100} height={100} />
             </div>
             <div className={styles["navbar__menu_section"]}>
-                <Link className={styles["navbar__menu_section_element"]} href={"/routes/home"}>
+                <Link className={styles["navbar__menu_section_element"]} href={"/"}>
                     Home
                 </Link>
                 <Link className={styles["navbar__menu_section_element"]} href={""}>
