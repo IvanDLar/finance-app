@@ -1,0 +1,35 @@
+.add-transaction-forms {
+    padding: 16px;
+}
+
+.transaction-type__section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 16px;
+}
+
+.transaction-card__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    background-color: white;
+    padding: 22px;
+}
+
+.transaction-card__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.icon__section {
+    width: 25%;
+}
+
+.amount-category__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 75%;
+}

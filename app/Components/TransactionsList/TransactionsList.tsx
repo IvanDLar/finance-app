@@ -14,7 +14,7 @@ const TransactionsList = ({ data } : TransactionsTableProps) => {
     return(
         <div>
             {data.map((transaction) => {
-                return <TransactionWidget name={transaction.name} amount={transaction.amount} isIncome={transaction.is_income} key={transaction.id}/>
+                return <TransactionWidget name={transaction.name} amount={transaction.amount} isIncome={transaction.is_income} category={transaction.category} key={transaction.id}/>
             })}
         </div>
     );

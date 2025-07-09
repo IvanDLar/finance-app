@@ -8,13 +8,13 @@ import SpendingGraph from "../SpendingGraph/SpendingGraph";
 import { Transaction } from "@/app/Types/Transactions";
 import MyButton from "../Button/Button";
 import TransactionVanillaTable from "../TransactionVanillaVanilla.tsx/TransactionTableVanilla";
-import TransactionWidget from "../TransactionWidget/TransactionWidget";
 import TransactionsList from "../TransactionsList/TransactionsList";
 
 interface BudgetDashboardType {
   session: any;
 };
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function BudgetDashboard({ session }: BudgetDashboardType) {
   // Initialize start and end dates
   const today = new Date();
@@ -44,7 +44,7 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
 
   const getMonthTransactions = async(date:string, endDate:string): Promise<void> => {
     try {
-      const response = await fetch(`https://finance-app-three-gamma.vercel.app/api/supa-endpoints/transactions/all-per-month?start=${date}&end=${endDate}`, {
+      const response = await fetch(`${BASE_URL}/api/supa-endpoints/transactions/all-per-month?start=${date}&end=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
     let monthTotalSum : number;
     try {
       const isIncome = type === "income";
-      const response = await fetch(`https://finance-app-three-gamma.vercel.app/api/supa-endpoints/transactions/sum-per-month?start=${date}&end=${endDate}&is_income=${isIncome}`, {
+      const response = await fetch(`${BASE_URL}/api/supa-endpoints/transactions/sum-per-month?start=${date}&end=${endDate}&is_income=${isIncome}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

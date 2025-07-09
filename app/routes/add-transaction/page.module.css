@@ -82,3 +82,9 @@
     grid-column: 1 / -1;
   }
 }
+
+/* New Version */
+
+.page {
+  padding: 16px;
+}

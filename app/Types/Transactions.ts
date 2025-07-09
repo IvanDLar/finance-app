@@ -5,7 +5,7 @@ export type Transaction = {
     name: string;
     amount: number;
     payee: string;
-    categories: string[];
+    category: "Pets" | "Dinning" | "Groceries" | "Shopping" | "Transit" | "Entertainment" | "Bills & Fees" | "Gifts" | "Beauty" | "Work" | "Travel" | "Balance Correction" | "Income" | "Housing" | "Health";
     account_id: string | null;
     is_income: boolean;
 };
