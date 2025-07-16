@@ -33,3 +33,46 @@
     justify-content: left;
     width: 75%;
 }
+
+.amount-category-input__section {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-input-title {
+    color: var(--text);
+    font-size: var(--mobile-24);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.transaction-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--desktop-paragraph-text);
+  border: 1px solid #cdd7ce;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  outline-color: var(--accent);
+}
+
+.transaction-amount-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--desktop-paragraph-text);
+  border: none;
+  border-radius: 6px;
+  outline-color: transparent
+}
+
+.account-pill__section {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button__section {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}

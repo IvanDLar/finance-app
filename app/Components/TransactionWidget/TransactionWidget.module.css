@@ -21,7 +21,3 @@
 .transaction-amount.income {
     color: var(--primary);
 }
-
-.class-icon {
-    color: var(--accent);
-}

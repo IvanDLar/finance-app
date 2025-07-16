@@ -1,13 +1,14 @@
-"use client"
-
-import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
-import toast, { Toaster } from 'react-hot-toast';
+import { createClient } from "@/lib/supabase/server";
 import styles from './page.module.css';
 import _ from 'underscore';
-import MyButton from '../../Components/Button/Button';
+import { Geist } from "next/font/google";
 import AddTransactionWidget from '@/app/Components/AddTransactionWidget/AddTransactionWidget';
+import { redirect } from "next/navigation";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
 interface Transaction {
     date: string;
@@ -17,60 +18,20 @@ interface Transaction {
 }
 
 
-const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
-  try {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const values = Object.fromEntries(formData.entries()) // Extract values properly
-    toast.promise(
-      async () => {
-        const response = await fetch('http://localhost:3000/api/transactions/index', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error || 'Something went wrong');
-        }
-        return data;
-      },
-      {
-        loading: 'Loading...',
-        success: 'Successfully added your transaction!',
-        error: (err) => err.message || 'Error while adding the transaction!',
-      }
-    );
-  }
-  catch(err) {
-    console.log(err);
-  }
-};
+const AddTransaction = async () => {
 
-const TransactionSchema = Yup.object().shape({
-    date: Yup.date()
-      .required('Required'),
-    amount: Yup.number()
-        .required('Required'),
-    payee: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
-    category: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
-  });
+  const supabase = await createClient();
 
-const AddTransaction = () => {
+  const { data: { session}, error } = await supabase.auth.getSession();
+  if (error || !session) {
+    redirect("/auth/login");
+  }
   return (
-    <div className={styles["page"]}>
+    <div className={`${styles["page"]} ${geistSans.variable}`}>
       <h1>
         Add Transaction
       </h1>
-      <AddTransactionWidget/>
+      <AddTransactionWidget session={session}/>
     </div>
 
   )

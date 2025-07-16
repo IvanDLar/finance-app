@@ -2,8 +2,22 @@
 
 import { useState } from "react";
 import styles from "./AddTransactionWidget.module.css";
+import MyButton from "../Button/Button";
+import toast from 'react-hot-toast';
 
-const AddTransactionWidget = () => {
+
+// const CategoryModal = () => {
+//     const DUMMY_DATA = {
+//         ""
+//     }
+//     return (
+//         <>
+//         </>
+//     );
+// };
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+const AddTransactionWidget = ({session}: any) => {
     const [transactionType, setTransactionType] = useState<boolean | undefined>(undefined);
     const [transactionAmount, setTransactionAmount] = useState<number>(0);
     const [transactionCategory, setTransactionCategory] = useState<string>("");
@@ -16,15 +30,50 @@ const AddTransactionWidget = () => {
         if (type === "income") setTransactionType(true);
         else setTransactionType(false);
     }
+
+    const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            const values = {
+                date: transactionDate,
+                amount: transactionAmount,
+                payee: transactionPayee,
+                isIncome: transactionType,
+                title: transactionTitle,
+                category: "Pets"
+            };
+            toast.promise(
+            async () => {
+                const response = await fetch(`${BASE_URL}/api/supa-endpoints/transactions/index`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${session?.access_token}`,
+                },
+                    body: JSON.stringify(values),
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Something went wrong');
+                }
+                return data;
+            },
+            {
+                loading: 'Loading...',
+                success: 'Successfully added your transaction!',
+                error: (err) => err.message || 'Error while adding the transaction!',
+            }
+            );
+        }
+        catch(err) {
+            console.log(err);
+        }
+    };
     return(
-        <form className={styles["add-transaction-forms"]}>
+        <form className={styles["add-transaction-forms"]} onSubmit={submitForm}>
             <div className={styles["transaction-type__section"]}>
-                <button className={styles["type-button"]} disabled={transactionType} onClick={() => {handleSetTransactionType("income")}}>
-                    Income
-                </button>
-                <button className={styles["type-button"]} disabled={!transactionType} onClick={() => {handleSetTransactionType("expense")}}>
-                    Expense
-                </button>
+                <MyButton text="Income" isDisabled={transactionType} onClick={() => {handleSetTransactionType("income")}}/>
+                <MyButton text="Expense" isDisabled={!transactionType} onClick={() => {handleSetTransactionType("expense")}}/>
             </div>
             <div className={styles["transaction-card__section"]}>
                 <div className={styles["transaction-card__top"]}>
@@ -32,8 +81,9 @@ const AddTransactionWidget = () => {
                             Icon
                         </div>
                         <div className={styles["amount-category__section"]}>
-                            <div>
+                            <div className={styles["amount-category-input__section"]}>
                                 $ <input
+                                    className={styles["transaction-amount-input"]}
                                     placeholder="0"
                                     value={transactionAmount}
                                     onChange={(e) => {setTransactionAmount(Number(e.target.value))}}></input>
@@ -48,22 +98,35 @@ const AddTransactionWidget = () => {
                     <h2 className={styles["transaction-input-title"]}>
                         Title
                     </h2>
-                    <input className={styles["input-box"]} value={transactionTitle}/>
+                    <input
+                        className={styles["transaction-input"]}
+                        value={transactionTitle}
+                        onChange={(e) => setTransactionTitle(e.target.value)}/>
                     <h2 className={styles["transaction-input-title"]}>
                         Date
                     </h2>
-                    <input className={styles["input-box"]} value={transactionDate} type="date"/>
+                    <input
+                        className={styles["transaction-input"]}
+                        value={transactionDate} type="date"
+                        onChange={(e) => setTransactionDate(e.target.value)}/>
                     <h2 className={styles["transaction-input-title"]}>
                         Payee
                     </h2>
-                    <input className={styles["input-box"]} value={transactionPayee}/>
+                    <input
+                        className={styles["transaction-input"]}
+                        value={transactionPayee}
+                        onChange={(e) => setTransactionPayee(e.target.value)}/>
                     <h2 className={styles["transaction-input-title"]}>
                         Account(s)
                     </h2>
-                    <p>Pill 1</p> <p>Pill 2</p>
+                    <div className={styles["account-pill__section"]}>
+                        <p>Pill 1</p> <p>Pill 2</p>
+                    </div>
                 </div>
             </div>
-            <button>Add Transaction</button>
+            <div className={styles["button__section"]}>
+                <MyButton  text = "Add Transaction" type="submit" />
+            </div>
         </form>
     )
 };
