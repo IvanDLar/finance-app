@@ -76,3 +76,22 @@
     justify-content: center;
     margin-top: 50px;
 }
+
+.toastContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toastClose {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.toastClose:hover {
+  color: #000;
+}

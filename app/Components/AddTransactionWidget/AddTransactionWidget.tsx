@@ -5,20 +5,20 @@ import styles from "./AddTransactionWidget.module.css";
 import MyButton from "../Button/Button";
 import toast from 'react-hot-toast';
 
-
 // const CategoryModal = () => {
 //     const DUMMY_DATA = {
 //         ""
-//     }
+//     };
 //     return (
 //         <>
 //         </>
 //     );
 // };
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const AddTransactionWidget = ({session}: any) => {
-    const [transactionType, setTransactionType] = useState<boolean | undefined>(undefined);
+    const [transactionType, setTransactionType] = useState<boolean>(true);
     const [transactionAmount, setTransactionAmount] = useState<number>(0);
     const [transactionCategory, setTransactionCategory] = useState<string>("");
     const [transactionTitle, setTransactionTitle] = useState<string>("");
@@ -52,6 +52,7 @@ const AddTransactionWidget = ({session}: any) => {
                 },
                     body: JSON.stringify(values),
                 });
+                console.log(values)
                 const data = await response.json();
                 if (!response.ok) {
                     throw new Error(data.error || 'Something went wrong');
@@ -60,8 +61,36 @@ const AddTransactionWidget = ({session}: any) => {
             },
             {
                 loading: 'Loading...',
-                success: 'Successfully added your transaction!',
-                error: (err) => err.message || 'Error while adding the transaction!',
+                success: (data) => (
+                    <div className={styles.toastContainer}>
+                        <span>Successfully added your transaction!</span>
+                        <button
+                        onClick={() => toast.dismiss()}
+                        className={styles.toastClose}
+                        >
+                        ✖
+                        </button>
+                    </div>
+                ),
+                error: (err) => (
+                    <div className={styles.toastContainer}>
+                        <span>{err.message || 'Error while adding your transaction!'}</span>
+                        <button
+                        onClick={() => toast.dismiss()}
+                        className={styles.toastClose}
+                        >
+                        ✖
+                        </button>
+                    </div>
+                ),
+            },
+            {
+                success: {
+                    duration: 3500,
+                },
+                error: {
+                    duration: 3500
+                }
             }
             );
         }

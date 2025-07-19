@@ -35,16 +35,17 @@ export async function POST(req: NextRequest) {
 
         const requestData = await req.json();
 
-        if (!requestData.title || !requestData.date || !requestData.amount || !requestData.payee || !requestData.category || !requestData.isIncome) {
+        if (!requestData.title || !requestData.date || !requestData.amount || !requestData.payee || !requestData.category || typeof(requestData.isIncome) != "boolean") {
             return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
         }
 
-        console.log(requestData);
         const { data, error } = await supabaseClient
             .from('Transaction')
             .insert([
                 { date: requestData.date, amount: requestData.amount, payee:requestData.payee, is_income: requestData.isIncome, name: requestData.title, category: requestData.category},
             ]);
+
+        if (error) throw new Error ("Failed to add transaction");
 
         return NextResponse.json({ success: true, message: 'Form submitted successfully' });
     }
