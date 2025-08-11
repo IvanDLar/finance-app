@@ -1,3 +1,17 @@
 .class-icon {
     color: var(--accent);
 }
+
+.category-icon-button {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15%;
+    background-color: rgba(129, 100, 208, 0.11);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: var(--box-shadow);
+    border: 0; 
+}

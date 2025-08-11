@@ -14,7 +14,7 @@ interface BudgetDashboardType {
   session: any;
 };
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.VERCEL_ENV  == "production" ? process.env.NEXT_PUBLIC_API_URL : "http://localhost:3000";
 export default function BudgetDashboard({ session }: BudgetDashboardType) {
   // Initialize start and end dates
   const today = new Date();

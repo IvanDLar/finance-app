@@ -4,23 +4,15 @@ import { useState } from "react";
 import styles from "./AddTransactionWidget.module.css";
 import MyButton from "../Button/Button";
 import toast from 'react-hot-toast';
+import CategoryIcon from '../CategoryIcon/CategoryIcon';
 
-// const CategoryModal = () => {
-//     const DUMMY_DATA = {
-//         ""
-//     };
-//     return (
-//         <>
-//         </>
-//     );
-// };
+const BASE_URL = process.env.VERCEL_ENV  == "production" ? process.env.NEXT_PUBLIC_API_URL : "http://localhost:3000";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-
+type category = "Pets" | "Dinning" | "Groceries" | "Shopping" | "Transit" | "Entertainment" | "Bills & Fees" | "Gifts" | "Beauty" | "Work" | "Travel" | "Balance Correction" | "Income" | "Housing" | "Health";
 const AddTransactionWidget = ({session}: any) => {
     const [transactionType, setTransactionType] = useState<boolean>(true);
     const [transactionAmount, setTransactionAmount] = useState<number>(0);
-    const [transactionCategory, setTransactionCategory] = useState<string>("");
+    const [transactionCategory, setTransactionCategory] = useState<category>("Bills & Fees");
     const [transactionTitle, setTransactionTitle] = useState<string>("");
     const [transactionDate, setTransactionDate] = useState<string>("");
     const [transactionPayee, setTransactionPayee] = useState<string>("");
@@ -107,7 +99,7 @@ const AddTransactionWidget = ({session}: any) => {
             <div className={styles["transaction-card__section"]}>
                 <div className={styles["transaction-card__top"]}>
                         <div className={styles["icon__section"]}>
-                            Icon
+                            <CategoryIcon category={transactionCategory} type="select_icon"/>
                         </div>
                         <div className={styles["amount-category__section"]}>
                             <div className={styles["amount-category-input__section"]}>
@@ -118,7 +110,7 @@ const AddTransactionWidget = ({session}: any) => {
                                     onChange={(e) => {setTransactionAmount(Number(e.target.value))}}></input>
                             </div>
                             <div>
-                                Category
+                                {transactionCategory}
                             </div>
                         </div>
 

@@ -12,7 +12,7 @@ const TransactionWidget = ({ name, amount, isIncome, category } : TransactionWid
     const transactionType = isIncome ? "income" : "expense";
     return (
         <div className={styles["transaction-widget"]}>
-            <CategoryIcon category={category}/>
+            <CategoryIcon category={category} type='static'/>
             <p className={styles["transaction-title"]}>
                 {name}
             </p>
