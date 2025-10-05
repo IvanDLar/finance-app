@@ -16,15 +16,16 @@ export default [
         sourceType: 'module',
         project: ['./tsconfig.json'],
       },
+      globals: {
+        fetch: 'readonly',
+        process: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': pluginTypeScript,
       prettier: pluginPrettier,
       baseui: pluginBaseui,
       react: pluginReact,
-    },
-    env: {
-      node: true,
     },
     rules: {
       ...pluginTypeScript.configs.recommended.rules,
