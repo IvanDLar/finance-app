@@ -47,7 +47,7 @@ const TransactionVanillaTable = ({date, endDate, getDashboardData, data}: Transa
 
     const handleDeleteTransaction = async (id: number) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/transactions/delete?id=${id}`, {
+            const response = await fetch(`https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/api/transactions/delete?id=${id}`, {
                 method: 'DELETE',
                 headers: {
                 'Content-Type': 'application/json',

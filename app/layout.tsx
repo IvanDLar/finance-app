@@ -1,9 +1,13 @@
+// ...no 'use client' here, keep as server component
 import type { Metadata } from "next";
-import DatadogInit from "./Components/datadog-init";
 import Navbar from "./Components/Navbar/Navbar";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MobileNavBar from "./Components/Navbar/Mobile/MobileNavBar";
+import BaseUIProvider from "./Components/BaseUIProvider";
+
+// ...existing code...
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +32,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <DatadogInit />
-        <Navbar/>
-        {children}
-        <MobileNavBar/>
+        <BaseUIProvider>
+          <Navbar/>
+          {children}
+          <MobileNavBar/>
+        </BaseUIProvider>
       </body>
     </html>
   );

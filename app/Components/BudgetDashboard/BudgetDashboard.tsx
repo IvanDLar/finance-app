@@ -14,7 +14,7 @@ interface BudgetDashboardType {
   session: any;
 };
 
-const BASE_URL = process.env.VERCEL_ENV  == "production" ? process.env.NEXT_PUBLIC_API_URL : "http://localhost:3000";
+const BASE_URL = process.env.VERCEL_ENV  == "production" ? process.env.NEXT_PUBLIC_API_URL : "https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/";
 export default function BudgetDashboard({ session }: BudgetDashboardType) {
   // Initialize start and end dates
   const today = new Date();
@@ -84,7 +84,7 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
 
   const getMonthTransactionCategoryCount = async(date:string, endDate:string): Promise<[{ category: string; sum: number; }] | undefined> => {
     try {
-      const response = await fetch(`http://localhost:3000/api/transactions/category-count?start=${date}&end=${endDate}`, {
+      const response = await fetch(`https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/api/transactions/category-count?start=${date}&end=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
