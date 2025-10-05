@@ -1,40 +1,40 @@
 .date-picker {
-    width: 32%;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+  width: 32%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
 }
 
 .change-date-arrows:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .displayed-date {
-    display: flex;
-    justify-content: center;
-    width: 50%;
+  display: flex;
+  justify-content: center;
+  width: 50%;
 }
 
 .left-arrow {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .right-arrow {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 @media (max-width: 600px) {
-    .date-picker {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-    }
+  .date-picker {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
 
-    .displayed-date {
-        text-align: center;
-        width: 50%;
-        font-size: 24px;
-    }
+  .displayed-date {
+    text-align: center;
+    width: 50%;
+    font-size: 24px;
+  }
 }

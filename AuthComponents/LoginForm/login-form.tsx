@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import "./login-form.css";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useState } from "react";
+import './login-form.css';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -26,9 +26,9 @@ export function LoginForm() {
       });
       if (error) throw error;
       // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push("/");
+      router.push('/');
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsLoading(false);
       router.refresh();
@@ -43,7 +43,9 @@ export function LoginForm() {
           To login into coinleaf you'll need to input your email and password.
         </p>
 
-        <label htmlFor="email" className="login-label">Email</label>
+        <label htmlFor="email" className="login-label">
+          Email
+        </label>
         <input
           id="email"
           type="email"
@@ -54,7 +56,9 @@ export function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label htmlFor="password" className="login-label">Password</label>
+        <label htmlFor="password" className="login-label">
+          Password
+        </label>
         <input
           id="password"
           type="password"
@@ -69,12 +73,11 @@ export function LoginForm() {
         {error && <p className="login-error">{error}</p>}
 
         <button type="submit" className="login-button" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
 
         <div className="login-footer">
-          Don&apos;t have an account?{" "}
-          <Link href="/auth/sign-up">Sign up</Link>
+          Don&apos;t have an account? <Link href="/auth/sign-up">Sign up</Link>
         </div>
       </form>
     </div>

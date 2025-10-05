@@ -1,36 +1,36 @@
 .pages_section {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    position: sticky;
-    bottom: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  bottom: 0;
 }
 
 .change-date-arrows:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .change-date-arrows.disabled {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .change-date-arrows.disabled:hover {
-    cursor: default;
+  cursor: default;
 }
 
 .delete_transaction:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .left-arrow {
-    display: flex;
-    align-items: center;
-    color: var(--accent)
+  display: flex;
+  align-items: center;
+  color: var(--accent);
 }
 
 .right-arrow {
-    display: flex;
-    align-items: center;
-    color: var(--accent)
+  display: flex;
+  align-items: center;
+  color: var(--accent);
 }

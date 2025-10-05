@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { createClient } from "@/lib/supabase/client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import "./sign-up-form.css"
+import { createClient } from '@/lib/supabase/client';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import './sign-up-form.css';
 
 export function SignUpForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -21,7 +21,7 @@ export function SignUpForm() {
     setError(null);
 
     if (password !== repeatPassword) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       setIsLoading(false);
       return;
     }
@@ -35,9 +35,9 @@ export function SignUpForm() {
         },
       });
       if (error) throw error;
-      router.push("/auth/sign-up-success");
+      router.push('/auth/sign-up-success');
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +48,9 @@ export function SignUpForm() {
       <form onSubmit={handleSignUp} className="signup-card">
         <h2 className="signup-title">Sign Up</h2>
         <p className="signup-description">Create a new account</p>
-        <label htmlFor="email" className="signup-label">Email</label>
+        <label htmlFor="email" className="signup-label">
+          Email
+        </label>
         <input
           id="email"
           type="email"
@@ -58,7 +60,9 @@ export function SignUpForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label htmlFor="password" className="signup-label">Password</label>
+        <label htmlFor="password" className="signup-label">
+          Password
+        </label>
         <input
           id="password"
           type="password"
@@ -67,7 +71,9 @@ export function SignUpForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label htmlFor="repeat-password" className="signup-label">Repeat Password</label>
+        <label htmlFor="repeat-password" className="signup-label">
+          Repeat Password
+        </label>
         <input
           id="repeat-password"
           type="password"
@@ -76,15 +82,12 @@ export function SignUpForm() {
           value={repeatPassword}
           onChange={(e) => setRepeatPassword(e.target.value)}
         />
-          {error && <p className="signup-error">{error}</p>}
-          <button type="submit" className="signup-button" disabled={isLoading}>
-            {isLoading ? "Creating an account..." : "Sign up"}
-          </button>
+        {error && <p className="signup-error">{error}</p>}
+        <button type="submit" className="signup-button" disabled={isLoading}>
+          {isLoading ? 'Creating an account...' : 'Sign up'}
+        </button>
         <div className="signup-footer">
-          Already have an account?{" "}
-          <Link href="/auth/login">
-            Login
-          </Link>
+          Already have an account? <Link href="/auth/login">Login</Link>
         </div>
       </form>
     </div>

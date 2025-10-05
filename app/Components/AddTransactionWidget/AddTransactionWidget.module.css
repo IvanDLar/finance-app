@@ -1,52 +1,52 @@
 .add-transaction-forms {
-    padding: 16px;
+  padding: 16px;
 }
 
 .transaction-type__section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 16px;
 }
 
 .transaction-card__section {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    background-color: white;
-    padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  background-color: white;
+  padding: 22px;
 }
 
 .transaction-card__top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .icon__section {
-    width: 25%;
+  width: 25%;
 }
 
 .amount-category__section {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 75%;
-    margin-left: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: 75%;
+  margin-left: 25%;
 }
 
 .amount-category-input__section {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .transaction-input-title {
-    color: var(--text);
-    font-size: var(--mobile-24);
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    display: block;
+  color: var(--text);
+  font-size: var(--mobile-24);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  display: block;
 }
 
 .transaction-input {
@@ -65,18 +65,18 @@
   font-size: var(--desktop-paragraph-text);
   border: none;
   border-radius: 6px;
-  outline-color: transparent
+  outline-color: transparent;
 }
 
 .account-pill__section {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .button__section {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
 }
 
 .toastContainer {

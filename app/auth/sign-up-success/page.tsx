@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/AuthComponents/ui/card";
+} from '@/AuthComponents/ui/card';
 
 export default function Page() {
   return (

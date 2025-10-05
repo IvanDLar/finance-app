@@ -1,54 +1,54 @@
 .navbar {
-    position: sticky;
-    display: flex;
-    top: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    background-color: white;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    height: 56px;
+  position: sticky;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background-color: white;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
 }
 
 .navbar__logo_section {
-    display: flex;
-    width: 25%;
-    justify-content: space-around;
+  display: flex;
+  width: 25%;
+  justify-content: space-around;
 }
 
 .navbar__menu_section {
-    display: flex;
-    width: 50%;
-    justify-content: space-around;
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
 }
 
 .navbar__menu_section_element {
-    transition: text-decoration 0.75s ease-in;
-    text-align: center;
-    align-self: center;
-    text-decoration: underline 0.15em rgba(0, 0, 0, 0);;
+  transition: text-decoration 0.75s ease-in;
+  text-align: center;
+  align-self: center;
+  text-decoration: underline 0.15em rgba(0, 0, 0, 0);
 }
 
 .navbar__menu_section_element:hover {
-    text-decoration-color: var(--accent)
+  text-decoration-color: var(--accent);
 }
 
 .navbar__profile_icon {
-    color: var(--accent);
+  color: var(--accent);
 }
 
 @media (max-width: 600px) {
-    .navbar {
-        justify-content: space-around;
-    }
+  .navbar {
+    justify-content: space-around;
+  }
 
-    .navbar__logo_section {
-        display: flex;
-        justify-content: space-around;
-    }
-    .navbar__menu_section {
-        display: none;
-    }
+  .navbar__logo_section {
+    display: flex;
+    justify-content: space-around;
+  }
+  .navbar__menu_section {
+    display: none;
+  }
 }

@@ -8,28 +8,33 @@ import {
 import { Transaction } from '@/app/Types/Transactions';
 import { Edit, Delete } from '@mui/icons-material';
 
-
 type TransactionsTableProps = {
-  date: string,
-  endDate: string,
-  getDashboardData: Function,
+  date: string;
+  endDate: string;
+  getDashboardData: Function;
   data: Transaction[];
-}
+};
 
-
-export default function TransactionsTable({ date, endDate, getDashboardData, data }: TransactionsTableProps) {
+export default function TransactionsTable({
+  date,
+  endDate,
+  getDashboardData,
+  data,
+}: TransactionsTableProps) {
   const handleDeleteTransaction = async (id: number) => {
     try {
-      const response = await fetch(`https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/api/transactions/delete?id=${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
+      const response = await fetch(
+        `https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/api/transactions/delete?id=${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
       await response.json();
       await getDashboardData(date, endDate);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -40,7 +45,7 @@ export default function TransactionsTable({ date, endDate, getDashboardData, dat
         accessorFn: (originalRow) => originalRow.date, //access nested data with dot notation
         header: 'Date',
         size: 150,
-        Cell: ({ cell }) => cell.getValue<String>().split("T")[0]
+        Cell: ({ cell }) => cell.getValue<String>().split('T')[0],
       },
       {
         accessorKey: 'amount',
@@ -56,7 +61,7 @@ export default function TransactionsTable({ date, endDate, getDashboardData, dat
         accessorKey: 'category',
         header: 'Category',
         size: 150,
-      }
+      },
     ],
     [],
   );
@@ -92,4 +97,4 @@ export default function TransactionsTable({ date, endDate, getDashboardData, dat
       <MaterialReactTable table={table} />
     </div>
   );
-};
+}

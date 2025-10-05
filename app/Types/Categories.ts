@@ -1,16 +1,16 @@
 export type Categories =
-    "Pets" |
-    "Dinning" |
-    "Groceries" |
-    "Shopping" |
-    "Transit" |
-    "Entertainment" |
-    "Bills & Fees" |
-    "Gifts" |
-    "Beauty" |
-    "Work" |
-    "Travel" |
-    "Balance Correction" |
-    "Income" |
-    "Housing" |
-    "Health";
+  | 'Pets'
+  | 'Dinning'
+  | 'Groceries'
+  | 'Shopping'
+  | 'Transit'
+  | 'Entertainment'
+  | 'Bills & Fees'
+  | 'Gifts'
+  | 'Beauty'
+  | 'Work'
+  | 'Travel'
+  | 'Balance Correction'
+  | 'Income'
+  | 'Housing'
+  | 'Health';

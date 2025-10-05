@@ -1,16 +1,20 @@
-import { NextResponse, NextRequest } from "next/server";
-import { Transaction } from "@/app/Types/Transactions";
-import sql from "@/Database/db";
+import { NextResponse, NextRequest } from 'next/server';
+import { Transaction } from '@/app/Types/Transactions';
+import sql from '@/Database/db';
 
 export async function POST(req: NextRequest) {
-    try {
-        const data = await req.json();
-        if (!data.date || !data.amount || !data.payee || !data.category) {
-            return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
-        }
-        const insertTransaction = async(data: Transaction) => {
-            try {
-                const result = await sql`
+  try {
+    const data = await req.json();
+    if (!data.date || !data.amount || !data.payee || !data.category) {
+      return NextResponse.json(
+        { success: false, error: 'Missing required fields' },
+        { status: 400 },
+      );
+    }
+
+    const insertTransaction = async (data: Transaction) => {
+      try {
+        const result = await sql`
                     INSERT INTO Transaction (date, amount, payee, category)
                     VALUES (
                         ${data.date},
@@ -19,18 +23,26 @@ export async function POST(req: NextRequest) {
                     )
                     RETURNING *;
                 `;
-                return result;
-            } catch(error:any) {
-                console.log("Error: ", error)
-            }
+        return result;
+      } catch (error: any) {
+        console.log('Error: ', error);
+      }
+    };
 
-        };
+    await insertTransaction(data);
 
-        await insertTransaction(data);
-
-        return NextResponse.json({ success: true, message: 'Form submitted successfully' });
-    }
-    catch (error:any) {
-        return NextResponse.json({ success: false, message: 'Error processing form submission request', error: error.message }, { status: 500 });
-    }
-};
+    return NextResponse.json({
+      success: true,
+      message: 'Form submitted successfully',
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Error processing form submission request',
+        error: error.message,
+      },
+      { status: 500 },
+    );
+  }
+}

@@ -1,26 +1,26 @@
 .back-button {
-    margin-top: 10px;
-    margin-left: 10px;
-    color: var(--accent);
-    font-size: var(--mobile-16);
-    font-weight: 600;
+  margin-top: 10px;
+  margin-left: 10px;
+  color: var(--accent);
+  font-size: var(--mobile-16);
+  font-weight: 600;
 }
 
 .profile-page {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .profile-logout-button-bottom {
-    position: fixed;
-    bottom: 75px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  position: fixed;
+  bottom: 75px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .logout-button {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }

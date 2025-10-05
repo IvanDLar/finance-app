@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/AuthComponents/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/AuthComponents/ui/card';
 
 export default async function Page({
   searchParams,
