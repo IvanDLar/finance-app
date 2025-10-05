@@ -38,6 +38,7 @@ const CategoryModal = ({
 }) => {
     const [selectedTransactionCategory, setSelectedTransactionCategory] = useState<Categories>(AVAILABLE_CATEGORIES[0]);
     const [css] = useStyletron();
+    
     return (
         <Modal
             isOpen={isCategoryModalOpen}
