@@ -6,12 +6,12 @@ import {
   type MRT_ColumnDef,
 } from 'material-react-table';
 import { Transaction } from '@/app/Types/Transactions';
-import { Edit, Delete } from '@mui/icons-material';
+import { Delete } from '@mui/icons-material';
 
 type TransactionsTableProps = {
   date: string;
   endDate: string;
-  getDashboardData: Function;
+  getDashboardData: (date: string, endDate: string) => Promise<void>;
   data: Transaction[];
 };
 
@@ -35,6 +35,7 @@ export default function TransactionsTable({
       await response.json();
       await getDashboardData(date, endDate);
     } catch (err) {
+      // eslint-disable-next-line no-undef
       console.log(err);
     }
   };
@@ -45,7 +46,7 @@ export default function TransactionsTable({
         accessorFn: (originalRow) => originalRow.date, //access nested data with dot notation
         header: 'Date',
         size: 150,
-        Cell: ({ cell }) => cell.getValue<String>().split('T')[0],
+        Cell: ({ cell }) => cell.getValue<string>().split('T')[0],
       },
       {
         accessorKey: 'amount',

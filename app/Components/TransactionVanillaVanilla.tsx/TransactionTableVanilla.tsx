@@ -8,7 +8,7 @@ import styles from './TransactionTableVanilla.module.css';
 type TransactionsTableProps = {
   date: string;
   endDate: string;
-  getDashboardData: Function;
+  getDashboardData: (date: string, endDate: string) => Promise<void>;
   data: Transaction[];
 };
 
@@ -67,6 +67,7 @@ const TransactionVanillaTable = ({
       await response.json();
       await getDashboardData(date, endDate);
     } catch (err) {
+      // eslint-disable-next-line no-undef
       console.log(err);
     }
   };

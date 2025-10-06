@@ -15,6 +15,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import HomeIcon from '@mui/icons-material/Home';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { Categories } from '@/app/Types/Categories';
+import { Dispatch, SetStateAction } from 'react';
 
 export const AVAILABLE_CATEGORIES = {
   Pets: <PetsIcon className={styles['class-icon']} />,
@@ -38,20 +39,20 @@ const CategoryIcon = ({
   category,
   type,
   setIsModalOpen,
-  setIsIconSelected,
+  setSelectedTransactionCategory,
 }: {
   category: Categories;
   type: 'static' | 'select_icon';
   setIsModalOpen?: (value: boolean) => void;
-  setIsIconSelected?: (value: boolean) => void;
+  setSelectedTransactionCategory?: Dispatch<SetStateAction<Categories>>;
 }) => {
   const handleIconClick = () => {
-    if (!!setIsModalOpen) {
+    if (setIsModalOpen) {
       setIsModalOpen(true);
     }
 
-    if (!!setIsIconSelected) {
-      const test = 'testing';
+    if (setSelectedTransactionCategory) {
+      setSelectedTransactionCategory(category);
     }
   };
 

@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import MobileNavBar from './Components/Navbar/Mobile/MobileNavBar';
 import BaseUIProvider from './Components/BaseUIProvider';
+import * as React from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,11 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <BaseUIProvider>
-          <Navbar />
-          {children}
-          <MobileNavBar />
-        </BaseUIProvider>
+        <Navbar />
+        <BaseUIProvider>{children}</BaseUIProvider>
+        <MobileNavBar />
       </body>
     </html>
   );

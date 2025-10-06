@@ -77,7 +77,11 @@ const CategoryModal = ({
                 alignItems: 'center',
               })}
             >
-              <CategoryIcon category={category} type="static" />
+              <CategoryIcon
+                category={category}
+                type="static"
+                setSelectedTransactionCategory={setSelectedTransactionCategory}
+              />
               {category}
             </div>
           );

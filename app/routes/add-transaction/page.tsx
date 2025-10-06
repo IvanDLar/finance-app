@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
 import styles from './page.module.css';
-import _ from 'underscore';
 import { Geist } from 'next/font/google';
 import AddTransactionWidget from '@/app/Components/AddTransactionWidget/AddTransactionWidget';
 import { redirect } from 'next/navigation';
@@ -11,12 +10,12 @@ const geistSans = Geist({
   subsets: ['latin'],
 });
 
-interface Transaction {
-  date: string;
-  amount: number;
-  payee: string;
-  category: string;
-}
+// interface Transaction {
+//   date: string;
+//   amount: number;
+//   payee: string;
+//   category: string;
+// }
 
 const AddTransaction = async () => {
   const supabase = await createClient();
