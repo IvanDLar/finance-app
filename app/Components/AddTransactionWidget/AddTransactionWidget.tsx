@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { useState } from 'react';
 import styles from './AddTransactionWidget.module.css';
 import MyButton from '../Button/Button';
@@ -15,7 +16,6 @@ import {
 import { KIND as ButtonKind } from 'baseui/button';
 import type { Categories } from '@/app/Types/Categories';
 import { useStyletron } from 'styletron-react';
-import { Category } from '@mui/icons-material';
 
 const BASE_URL =
   process.env.VERCEL_ENV == 'production'
@@ -43,19 +43,38 @@ const AVAILABLE_CATEGORIES: Categories[] = [
 const CategoryModal = ({
   isCategoryModalOpen,
   setIsCategoryModalOpen,
+  transactionCategory,
+  setTransactionCategory,
 }: {
   isCategoryModalOpen: boolean;
   setIsCategoryModalOpen: (value: boolean) => void;
+  transactionCategory: Categories;
+  setTransactionCategory: (category: Categories) => void;
 }) => {
   const [selectedTransactionCategory, setSelectedTransactionCategory] =
-    useState<Categories>(AVAILABLE_CATEGORIES[0]);
+    useState<Categories>(transactionCategory);
   const [css] = useStyletron();
+
+  const handleSaveCategory = () => {
+    setIsCategoryModalOpen(false);
+    if (
+      selectedTransactionCategory &&
+      selectedTransactionCategory != transactionCategory
+    ) {
+      setTransactionCategory(selectedTransactionCategory);
+    }
+  };
+
+  const handleOnClose = () => {
+    setIsCategoryModalOpen(false);
+    setSelectedTransactionCategory(transactionCategory);
+  };
 
   return (
     <Modal
       isOpen={isCategoryModalOpen}
       closeable
-      onClose={() => setIsCategoryModalOpen(false)}
+      onClose={handleOnClose}
       animate
       autoFocus
     >
@@ -75,11 +94,15 @@ const CategoryModal = ({
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                backgroundColor:
+                  selectedTransactionCategory === category
+                    ? 'rgba(129, 100, 208, 0.11);'
+                    : undefined,
               })}
             >
               <CategoryIcon
                 category={category}
-                type="static"
+                type="select_icon"
                 setSelectedTransactionCategory={setSelectedTransactionCategory}
               />
               {category}
@@ -89,7 +112,7 @@ const CategoryModal = ({
       </ModalBody>
       <ModalFooter>
         <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
-        <ModalButton>Okay</ModalButton>
+        <ModalButton onClick={handleSaveCategory}>Save</ModalButton>
       </ModalFooter>
     </Modal>
   );
@@ -125,7 +148,7 @@ const AddTransactionWidget = ({ session }: any) => {
         payee: transactionPayee,
         isIncome: transactionType,
         title: transactionTitle,
-        category: 'Pets',
+        category: transactionCategory,
       };
       toast.promise(
         async () => {
@@ -192,6 +215,8 @@ const AddTransactionWidget = ({ session }: any) => {
       <CategoryModal
         isCategoryModalOpen={isCategoryModalOpen}
         setIsCategoryModalOpen={setIsCategoryModalOpen}
+        setTransactionCategory={setTransactionCategory}
+        transactionCategory={transactionCategory}
       />
       <form className={styles['add-transaction-forms']} onSubmit={submitForm}>
         <div className={styles['transaction-type__section']}>
