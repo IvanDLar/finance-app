@@ -15,7 +15,7 @@ export default function TotalSpentWidget({
     <div className={styles['widget']}>
       <h2 className={styles['spent-this-month']}>{`${type}`}</h2>
       <span className={`${styles['total']} ${styles[widgetType]}`}>
-        ${total}
+        ${total.toLocaleString('en-US')}
       </span>
       <span className={`${styles['transaction-count']}`}>
         X total transactions

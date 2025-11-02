@@ -178,7 +178,7 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
           )}
         </div>
         <div className={styles['transactions__section']}>
-          <h2>Transactions this month</h2>
+          <h2>Recent Transactions</h2>
           <div>
             <TransactionsList data={data} />
           </div>

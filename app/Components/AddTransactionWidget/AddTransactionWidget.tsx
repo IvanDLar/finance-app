@@ -16,6 +16,7 @@ import {
 import { KIND as ButtonKind } from 'baseui/button';
 import type { Categories } from '@/app/Types/Categories';
 import { useStyletron } from 'styletron-react';
+import { NumericFormat } from 'react-number-format';
 
 const BASE_URL =
   process.env.VERCEL_ENV == 'production'
@@ -78,41 +79,81 @@ const CategoryModal = ({
       animate
       autoFocus
     >
-      <ModalHeader>Hello world</ModalHeader>
+      <ModalHeader
+        className={css({
+          textAlign: 'center',
+        })}
+      >
+        Select a Category
+      </ModalHeader>
       <ModalBody
         className={css({
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
+          display: 'flex',
+          flexDirection: 'column',
+          overflowY: 'scroll',
+          height: '200px',
+          marginRight: '40px',
+          marginLeft: '40px',
+          gap: '8px',
         })}
       >
         {AVAILABLE_CATEGORIES.map((category: Categories) => {
           return (
             <div
               key={category}
+              onClick={() => {
+                setSelectedTransactionCategory(category);
+              }}
               className={css({
-                display: 'flex',
-                flexDirection: 'column',
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
                 justifyContent: 'center',
                 alignItems: 'center',
+                borderStyle: 'solid',
+                borderWidth: '1px',
+                borderColor: '#DADADA',
+                borderRadius: '8px',
                 backgroundColor:
                   selectedTransactionCategory === category
-                    ? 'rgba(129, 100, 208, 0.11);'
+                    ? '#5D24E1'
                     : undefined,
               })}
             >
               <CategoryIcon
                 category={category}
                 type="select_icon"
-                setSelectedTransactionCategory={setSelectedTransactionCategory}
+                isSelected={selectedTransactionCategory === category}
               />
-              {category}
+              <div
+                className={css({
+                  textAlign: 'center',
+                  color:
+                    selectedTransactionCategory === category
+                      ? '#ffffffff'
+                      : '#030a05',
+                })}
+              >{`${category}`}</div>
             </div>
           );
         })}
       </ModalBody>
       <ModalFooter>
         <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
-        <ModalButton onClick={handleSaveCategory}>Save</ModalButton>
+        <ModalButton
+          className={css({
+            backgroundColor: '#5D24E1',
+          })}
+          onClick={handleSaveCategory}
+          overrides={{
+            BaseButton: {
+              style: () => ({
+                backgroundColor: '#5D24E1',
+              }),
+            },
+          }}
+        >
+          Save
+        </ModalButton>
       </ModalFooter>
     </Modal>
   );
@@ -126,10 +167,10 @@ const AddTransactionWidget = ({ session }: any) => {
   const [transactionTitle, setTransactionTitle] = useState<string>('');
   const [transactionDate, setTransactionDate] = useState<string>('');
   const [transactionPayee, setTransactionPayee] = useState<string>('');
-  const [transactionAccounts, setTransactionAccounts] = useState<
-    string | undefined
-  >(undefined);
-
+  // const [transactionAccounts, setTransactionAccounts] = useState<
+  //   string | undefined
+  // >(undefined);
+  const [css] = useStyletron();
   // Modal State
   const [isCategoryModalOpen, setIsCategoryModalOpen] =
     useState<boolean>(false);
@@ -163,7 +204,6 @@ const AddTransactionWidget = ({ session }: any) => {
               body: JSON.stringify(values),
             },
           );
-          console.log(values);
           const data = await response.json();
           if (!response.ok) {
             throw new Error(data.error || 'Something went wrong');
@@ -172,9 +212,9 @@ const AddTransactionWidget = ({ session }: any) => {
         },
         {
           loading: 'Loading...',
-          success: (data) => (
+          success: () => (
             <div className={styles.toastContainer}>
-              <span>Successfully added your transaction!</span>
+              <span> Successfully added your transaction! </span>
               <button
                 onClick={() => toast.dismiss()}
                 className={styles.toastClose}
@@ -220,20 +260,31 @@ const AddTransactionWidget = ({ session }: any) => {
       />
       <form className={styles['add-transaction-forms']} onSubmit={submitForm}>
         <div className={styles['transaction-type__section']}>
-          <MyButton
-            text="Income"
-            isDisabled={transactionType}
-            onClick={() => {
-              handleSetTransactionType('income');
-            }}
-          />
-          <MyButton
-            text="Expense"
-            isDisabled={!transactionType}
-            onClick={() => {
-              handleSetTransactionType('expense');
-            }}
-          />
+          <div
+            className={css({
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-around',
+            })}
+          >
+            <MyButton
+              text="Income"
+              isDisabled={transactionType}
+              onClick={() => {
+                handleSetTransactionType('income');
+              }}
+              size="medium-small"
+            />
+            <MyButton
+              text="Expense"
+              isDisabled={!transactionType}
+              onClick={() => {
+                handleSetTransactionType('expense');
+              }}
+              size="medium-small"
+            />
+          </div>
         </div>
         <div className={styles['transaction-card__section']}>
           <div className={styles['transaction-card__top']}>
@@ -242,19 +293,22 @@ const AddTransactionWidget = ({ session }: any) => {
                 category={transactionCategory}
                 type="select_icon"
                 setIsModalOpen={setIsCategoryModalOpen}
+                isSelected={false}
               />
             </div>
             <div className={styles['amount-category__section']}>
               <div className={styles['amount-category-input__section']}>
-                ${' '}
-                <input
+                {transactionType ? '+' : '-'}${' '}
+                <NumericFormat
                   className={styles['transaction-amount-input']}
-                  placeholder="0"
                   value={transactionAmount}
-                  onChange={(e) => {
-                    setTransactionAmount(Number(e.target.value));
+                  thousandSeparator
+                  onValueChange={(values) => {
+                    if (values.floatValue !== undefined) {
+                      setTransactionAmount(values.floatValue);
+                    }
                   }}
-                ></input>
+                />
               </div>
               <div>{transactionCategory}</div>
             </div>

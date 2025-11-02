@@ -15,44 +15,46 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import HomeIcon from '@mui/icons-material/Home';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { Categories } from '@/app/Types/Categories';
-import { Dispatch, SetStateAction } from 'react';
 
-export const AVAILABLE_CATEGORIES = {
-  Pets: <PetsIcon className={styles['class-icon']} />,
-  Dinning: <DiningIcon className={styles['class-icon']} />,
-  Groceries: <StoreIcon className={styles['class-icon']} />,
-  Shopping: <ShoppingBagIcon className={styles['class-icon']} />,
-  Transit: <DirectionsTransitIcon className={styles['class-icon']} />,
-  Entertainment: <TheaterComedyIcon className={styles['class-icon']} />,
-  'Bills & Fees': <PointOfSaleIcon className={styles['class-icon']} />,
-  Gifts: <CardGiftcardIcon className={styles['class-icon']} />,
-  Beauty: <FaceRetouchingNaturalIcon className={styles['class-icon']} />,
-  Work: <WorkIcon className={styles['class-icon']} />,
-  Travel: <LocalAirportIcon className={styles['class-icon']} />,
-  'Balance Correction': <BalanceIcon className={styles['class-icon']} />,
-  Income: <MonetizationOnIcon className={styles['class-icon']} />,
-  Housing: <HomeIcon className={styles['class-icon']} />,
-  Health: <HealthAndSafetyIcon className={styles['class-icon']} />,
+export const AVAILABLE_CATEGORIES = (isSelected: boolean) => {
+  const iconStyle = isSelected ? 'class-icon-selected' : 'class-icon';
+  return {
+    Pets: <PetsIcon className={styles[iconStyle]} />,
+    Dinning: <DiningIcon className={styles[iconStyle]} />,
+    Groceries: <StoreIcon className={styles[iconStyle]} />,
+    Shopping: <ShoppingBagIcon className={styles[iconStyle]} />,
+    Transit: <DirectionsTransitIcon className={styles[iconStyle]} />,
+    Entertainment: <TheaterComedyIcon className={styles[iconStyle]} />,
+    'Bills & Fees': <PointOfSaleIcon className={styles[iconStyle]} />,
+    Gifts: <CardGiftcardIcon className={styles[iconStyle]} />,
+    Beauty: <FaceRetouchingNaturalIcon className={styles[iconStyle]} />,
+    Work: <WorkIcon className={styles[iconStyle]} />,
+    Travel: <LocalAirportIcon className={styles[iconStyle]} />,
+    'Balance Correction': <BalanceIcon className={styles[iconStyle]} />,
+    Income: <MonetizationOnIcon className={styles[iconStyle]} />,
+    Housing: <HomeIcon className={styles[iconStyle]} />,
+    Health: <HealthAndSafetyIcon className={styles[iconStyle]} />,
+  };
 };
 
 const CategoryIcon = ({
   category,
   type,
   setIsModalOpen,
-  setSelectedTransactionCategory,
+  isSelected,
 }: {
   category: Categories;
   type: 'static' | 'select_icon';
   setIsModalOpen?: (value: boolean) => void;
-  setSelectedTransactionCategory?: Dispatch<SetStateAction<Categories>>;
+  isSelected?: boolean;
 }) => {
+  let availabelCategories;
+  if (isSelected === undefined) isSelected = false;
+
+  availabelCategories = AVAILABLE_CATEGORIES(isSelected);
   const handleIconClick = () => {
     if (setIsModalOpen) {
       setIsModalOpen(true);
-    }
-
-    if (setSelectedTransactionCategory) {
-      setSelectedTransactionCategory(category);
     }
   };
 
@@ -63,11 +65,11 @@ const CategoryIcon = ({
         type="button"
         className={styles['category-icon-button']}
       >
-        {AVAILABLE_CATEGORIES[category]}
+        {availabelCategories && availabelCategories[category]}
       </button>
     );
   } else {
-    return <div>{AVAILABLE_CATEGORIES[category]}</div>;
+    return <div>{availabelCategories && availabelCategories[category]}</div>;
   }
 };
 

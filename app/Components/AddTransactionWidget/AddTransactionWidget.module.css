@@ -14,7 +14,6 @@
   flex-direction: column;
   justify-content: left;
   background-color: white;
-  padding: 22px;
 }
 
 .transaction-card__top {
@@ -26,6 +25,8 @@
 
 .icon__section {
   width: 25%;
+  display: flex;
+  justify-content: center;
 }
 
 .amount-category__section {

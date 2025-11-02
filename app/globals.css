@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
 
 :root {
-  --background: #f4fbf6;
+  --background: #FFFFFF;
   --text: #030a05;
   --gray-text: #6b726c;
-  --primary: #4cc36b;
-  --secondary: #a2caae;
+  --primary: #5D24E1;
+  --secondary: #A881F2;
 
-  --accent-light: #95d2c1;
-  --accent: #6480d0;
-  --accent-dark: #548376;
+  --accent-light: #9156fe;
+  --accent: #7429FF;
+  --accent-dark: #4e13bb;
 
   --desktop-title-text: 64px;
   --desktop-sub-title-text: 40px;

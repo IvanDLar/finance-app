@@ -13,6 +13,13 @@
   border-radius: 10px;
 }
 
+.button.medium-small {
+  width: 100px;
+  height: 40px;
+  font-size: var(--desktop-lead-text);
+  border-radius: 10px;
+}
+
 .button.small {
   width: 80px;
   height: 30px;
@@ -31,9 +38,8 @@
 
 .main-button:disabled {
   cursor: default;
-  background-color: #cccccc;
-  color: #848484;
-  border-color: #cccccc;
+  background-color: white;
+  color: var(--primary);
 }
 
 .outlined-button {

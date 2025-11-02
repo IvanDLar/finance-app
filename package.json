@@ -33,6 +33,7 @@
     "react-dom": "^18.2.0",
     "react-google-charts": "^5.2.1",
     "react-hot-toast": "^2.5.2",
+    "react-number-format": "^5.4.4",
     "styletron-engine-monolithic": "^1.0.0",
     "styletron-react": "^6.1.1",
     "tailwind-merge": "^3.3.1",
