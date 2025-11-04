@@ -19,7 +19,7 @@ import { useStyletron } from 'styletron-react';
 import { NumericFormat } from 'react-number-format';
 
 const BASE_URL =
-  process.env.VERCEL_ENV == 'production'
+  process.env.NEXT_PUBLIC_VERCEL_ENV == 'production'
     ? process.env.NEXT_PUBLIC_API_URL
     : 'https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/';
 
