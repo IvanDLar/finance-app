@@ -19,6 +19,10 @@ const BASE_URL =
   process.env.VERCEL_ENV == 'production'
     ? process.env.NEXT_PUBLIC_API_URL
     : 'https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/';
+
+console.log('BASE_URL:', BASE_URL);
+console.log('process.env.VERCEL_ENV', process.env.VERCEL_ENV);
+
 export default function BudgetDashboard({ session }: BudgetDashboardType) {
   // Initialize start and end dates
   const today = new Date();
@@ -104,7 +108,7 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
   ): Promise<[{ category: string; sum: number }] | undefined> => {
     try {
       const response = await fetch(
-        `https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/api/transactions/category-count?start=${date}&end=${endDate}`,
+        `${BASE_URL}/api/transactions/category-count?start=${date}&end=${endDate}`,
         {
           method: 'GET',
           headers: {
