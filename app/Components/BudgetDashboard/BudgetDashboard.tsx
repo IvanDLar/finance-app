@@ -15,13 +15,22 @@ interface BudgetDashboardType {
   session: any;
 }
 
+type TransactionT = {
+  account_id?: string;
+  amount: number;
+  category: string;
+  date: string;
+  id: number;
+  is_income: boolean;
+  name: string;
+  payee: string;
+  user_id: string;
+};
+
 const BASE_URL =
   process.env.NEXT_PUBLIC_VERCEL_ENV == 'production'
     ? process.env.NEXT_PUBLIC_API_URL
     : 'https://reimagined-space-potato-jw54r54774cqpxw-3000.app.github.dev/';
-
-console.log('BASE_URL:', BASE_URL);
-console.log('process.env.VERCEL_ENV', process.env.VERCEL_ENV);
 
 export default function BudgetDashboard({ session }: BudgetDashboardType) {
   // Initialize start and end dates
@@ -54,7 +63,7 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
   const getMonthTransactions = async (
     date: string,
     endDate: string,
-  ): Promise<void> => {
+  ): Promise<TransactionT[]> => {
     try {
       const response = await fetch(
         `${BASE_URL}/api/supa-endpoints/transactions/all-per-month?start=${date}&end=${endDate}`,
@@ -68,35 +77,26 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
       );
       const transactionsRequest = await response.json();
       setData(transactionsRequest.transactions);
+      return transactionsRequest.transactions;
     } catch (err) {
       throw new Error(`[ERROR]: ${err}`);
     }
   };
 
   const getMonthTransactionSumPerType = async (
-    date: string,
-    endDate: string,
-    type: string,
+    transactions: TransactionT[],
   ): Promise<void> => {
-    let monthTotalSum: number;
     try {
-      const isIncome = type === 'income';
-      const response = await fetch(
-        `${BASE_URL}/api/supa-endpoints/transactions/sum-per-month?start=${date}&end=${endDate}&is_income=${isIncome}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-        },
-      );
-      const sumRequest = await response.json();
-      const requestData = sumRequest.data;
-      monthTotalSum = Math.round(requestData * 100) / 100;
+      let totalIncome = 0;
+      let totalExpense = 0;
 
-      if (isIncome) setTotalIncome(monthTotalSum);
-      else setTotalExpense(monthTotalSum);
+      transactions.forEach((transaction) => {
+        if (transaction.is_income) totalIncome += transaction.amount;
+        else totalExpense += transaction.amount;
+      });
+
+      setTotalIncome(Math.round(totalIncome * 100) / 100);
+      setTotalExpense(Math.round(totalExpense * 100) / 100);
     } catch (err) {
       throw new Error(`[ERROR]: ${err}`);
     }
@@ -133,9 +133,8 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
     date: string,
     endDate: string,
   ): Promise<void> => {
-    await getMonthTransactions(date, endDate);
-    await getMonthTransactionSumPerType(date, endDate, 'income');
-    await getMonthTransactionSumPerType(date, endDate, 'expense');
+    const transactions = await getMonthTransactions(date, endDate);
+    await getMonthTransactionSumPerType(transactions);
     const categoryCountArray = await getMonthTransactionCategoryCount(
       date,
       endDate,
