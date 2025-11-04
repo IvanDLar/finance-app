@@ -4,7 +4,7 @@
   grid-template-rows: 0.5fr 0.5fr 2fr;
   align-items: center;
   justify-items: center;
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-nunito);
 }
 
 .main {

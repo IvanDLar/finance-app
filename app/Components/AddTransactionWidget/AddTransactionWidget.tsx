@@ -298,7 +298,15 @@ const AddTransactionWidget = ({ session }: any) => {
             </div>
             <div className={styles['amount-category__section']}>
               <div className={styles['amount-category-input__section']}>
-                {transactionType ? '+' : '-'}${' '}
+                <div
+                  className={css({
+                    fontSize: '24px',
+                    fontWeight: '600',
+                    paddingRight: '0.5px',
+                  })}
+                >
+                  {transactionType ? '+' : '-'}${' '}
+                </div>
                 <NumericFormat
                   className={styles['transaction-amount-input']}
                   value={transactionAmount}

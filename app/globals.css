@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
-
 :root {
   --background: #FFFFFF;
   --text: #030a05;
@@ -30,10 +28,14 @@ html {
 }
 
 body {
-  font-family: 'Geist Mono', monospace;
+  font-family: 'Nunito', monospace;
   max-width: 100vw;
   overflow-x: hidden;
   padding-bottom: 60px;
+}
+
+input {
+  font-family: 'Nunito', monospace;
 }
 
 h1 {

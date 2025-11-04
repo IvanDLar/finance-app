@@ -1,19 +1,14 @@
 // ...no 'use client' here, keep as server component
 import type { Metadata } from 'next';
 import Navbar from './Components/Navbar/Navbar';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 import './globals.css';
 import MobileNavBar from './Components/Navbar/Mobile/MobileNavBar';
 import BaseUIProvider from './Components/BaseUIProvider';
 import * as React from 'react';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const nunito = Nunito({
+  variable: '--font-nunito',
   subsets: ['latin'],
 });
 
@@ -29,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${nunito.variable}`}>
         <Navbar />
         <BaseUIProvider>{children}</BaseUIProvider>
         <MobileNavBar />

@@ -1,12 +1,12 @@
 import { createClient } from '@/lib/supabase/server';
 import styles from './page.module.css';
-import { Geist } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 import AddTransactionWidget from '@/app/Components/AddTransactionWidget/AddTransactionWidget';
 import { redirect } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const nunito = Nunito({
+  variable: '--font-nunito',
   subsets: ['latin'],
 });
 
@@ -28,7 +28,7 @@ const AddTransaction = async () => {
     redirect('/auth/login');
   }
   return (
-    <div className={`${styles['page']} ${geistSans.variable}`}>
+    <div className={`${styles['page']} ${nunito.variable}`}>
       <Toaster position="top-center" />
       <h1>Add Transaction</h1>
 

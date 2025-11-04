@@ -32,7 +32,7 @@
   background-color: var(--accent);
   font-size: var(--desktop-lead-text);
   font-weight: 600;
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-nunito);
   border-color: var(--accent-light) var(--accent) var(--accent-dark);
 }
 
@@ -47,6 +47,6 @@
   background-color: white;
   font-size: var(--desktop-lead-text);
   font-weight: 600;
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-nunito);
   border-color: var(--accent);
 }
