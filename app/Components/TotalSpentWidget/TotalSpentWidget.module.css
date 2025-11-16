@@ -10,6 +10,11 @@
   justify-content: space-around;
 }
 
+
+.widget.widget-large {
+  width: 100%
+}
+
 .spent-this-month {
   color: var(--text);
   font-size: var(--mobile-14);

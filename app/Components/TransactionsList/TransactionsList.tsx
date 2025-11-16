@@ -2,6 +2,7 @@ import TransactionWidget from '../TransactionWidget/TransactionWidget';
 import { Transaction } from '@/app/Types/Transactions';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
+import { useStyletron } from 'styletron-react';
 
 type TransactionsT = Transaction[];
 type TransactionsPerDayT = [string, TransactionsT][];
@@ -13,6 +14,8 @@ type TransactionsPerDayMapT = {
 const TransactionsList = ({ data }: { data: TransactionsT }) => {
   const [transactionsPerDay, setTransactionsPerDay] =
     useState<TransactionsPerDayT>([]);
+  const [css] = useStyletron();
+
   const groupTransactionsPerDate = () => {
     if (!data || !data.length) setTransactionsPerDay([]);
     let transactionsPerDayMap: TransactionsPerDayMapT = {};
@@ -49,7 +52,15 @@ const TransactionsList = ({ data }: { data: TransactionsT }) => {
         const [date, datesArray] = dateTransactions;
         return (
           <>
-            <div key={date}>{date}</div>
+            <div
+              key={date}
+              className={css({
+                fontSize: '12px',
+                color: '#6B726C',
+              })}
+            >
+              {date}
+            </div>
             {datesArray.map((transaction) => {
               return (
                 <TransactionWidget
