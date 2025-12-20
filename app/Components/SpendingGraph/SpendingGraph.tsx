@@ -12,6 +12,20 @@ type TransactionsGraphProps = {
   date: string;
 };
 
+const TRANSACTION_TYPE_STYLE: Record<
+  string,
+  { backgroundColor: string; borderColor: string }
+> = {
+  Income: {
+    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+    borderColor: 'rgba(153, 102, 255, 1)',
+  },
+  Expense: {
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgba(255, 99, 132, 1)',
+  },
+};
+
 const AVAILABLE_CATEGORIES_STYLES: Record<
   string,
   { backgroundColor: string; borderColor: string }
@@ -93,10 +107,74 @@ export default function SpendingGraph({
     }[];
   }>();
 
+  const validateTransactionType = (transaction: Transaction) => {
+    return transaction.is_income;
+  };
+
+  // ! This commented code is to get the pie chart by expense/income
+  // React.useEffect(() => {
+  //   let tempTransactionsPerIncomeType: { [k: string]: number } = {};
+
+  //   for (let transaction of transactions) {
+  //     const transactionType = validateTransactionType(transaction)
+  //       ? 'Income'
+  //       : 'Expense';
+
+  //     if (!tempTransactionsPerIncomeType[transactionType]) {
+  //       tempTransactionsPerIncomeType[transactionType] = transaction.amount;
+  //     } else {
+  //       tempTransactionsPerIncomeType[transactionType] =
+  //         tempTransactionsPerIncomeType[transactionType] + transaction.amount;
+  //     }
+  //   }
+
+  //   // Extract keys first to use on matching styles with category, this ensures
+  //   // constant matching (Object.keys() extraction does not ensure order)
+  //   const transactionsPerTransactionTypeKeys =
+  //     tempTransactionsPerIncomeType &&
+  //     Object.keys(tempTransactionsPerIncomeType);
+
+  //   const stylesToUse = transactionsPerTransactionTypeKeys.filter(
+  //     (transactionType) => {
+  //       return TRANSACTION_TYPE_STYLE[transactionType];
+  //     },
+  //   );
+
+  //   const backgroundColorsToUse = stylesToUse.map((transactionType) => {
+  //     return TRANSACTION_TYPE_STYLE[transactionType].backgroundColor;
+  //   });
+
+  //   const borderColorsToUse = stylesToUse.map((transactionType) => {
+  //     return TRANSACTION_TYPE_STYLE[transactionType].borderColor;
+  //   });
+
+  //   const data = {
+  //     labels: tempTransactionsPerIncomeType
+  //       ? transactionsPerTransactionTypeKeys
+  //       : [],
+  //     datasets: [
+  //       {
+  //         label: 'Total',
+  //         data: tempTransactionsPerIncomeType
+  //           ? Object.values(tempTransactionsPerIncomeType)
+  //           : [],
+  //         backgroundColor: backgroundColorsToUse,
+  //         borderColor: borderColorsToUse,
+  //         borderWidth: 1,
+  //       },
+  //     ],
+  //   };
+  //   setPieChartData(data);
+  // }, [transactions, date]);
+
+  // Generate expenses pie chart.
   React.useEffect(() => {
     let tempTransactionsPerCategory: { [k: string]: number } = {};
 
     for (let transaction of transactions) {
+      // TODO: Abstract this code into a method to generate
+      // income and expense pie charts.
+      if (validateTransactionType(transaction)) continue;
       if (!tempTransactionsPerCategory[transaction.category]) {
         tempTransactionsPerCategory[transaction.category] = transaction.amount;
       } else {
