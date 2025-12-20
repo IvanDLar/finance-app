@@ -56,9 +56,9 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
   const [endDate, setEndDate] = useState<string>(fullEndDate);
   const [data, setData] = useState<Transaction[]>([]);
   const [totalExpense, setTotalExpense] = useState<number>(0);
+  const [totalExpenseTCount, setTotalExpenseTCount] = useState<number>(0);
   const [totalIncome, setTotalIncome] = useState<number>(0);
-  const [chartCountArray, setChartCountArray] =
-    useState<(string | number)[][]>();
+  const [totalIncomeTCount, setTotalIncomeTCount] = useState<number>(0);
 
   const getMonthTransactions = async (
     date: string,
@@ -87,42 +87,25 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
     transactions: TransactionT[],
   ): Promise<void> => {
     try {
+      let totalIncomeTCount = 0;
+      let totalExpenseTCount = 0;
       let totalIncome = 0;
       let totalExpense = 0;
 
       transactions.forEach((transaction) => {
-        if (transaction.is_income) totalIncome += transaction.amount;
-        else totalExpense += transaction.amount;
+        if (transaction.is_income) {
+          totalIncome += transaction.amount;
+          totalIncomeTCount += 1;
+        } else {
+          totalExpense += transaction.amount;
+          totalExpenseTCount += 1;
+        }
       });
 
       setTotalIncome(Math.round(totalIncome * 100) / 100);
+      setTotalIncomeTCount(totalIncomeTCount);
       setTotalExpense(Math.round(totalExpense * 100) / 100);
-    } catch (err) {
-      throw new Error(`[ERROR]: ${err}`);
-    }
-  };
-
-  const getMonthTransactionCategoryCount = async (
-    date: string,
-    endDate: string,
-  ): Promise<[{ category: string; sum: number }] | undefined> => {
-    try {
-      const response = await fetch(
-        `${BASE_URL}/api/transactions/category-count?start=${date}&end=${endDate}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-
-      const categoryCountRequest = await response.json();
-
-      if (categoryCountRequest.data) {
-        const categoryCountArray = categoryCountRequest.data;
-        return categoryCountArray;
-      }
+      setTotalExpenseTCount(totalExpenseTCount);
     } catch (err) {
       throw new Error(`[ERROR]: ${err}`);
     }
@@ -135,25 +118,6 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
   ): Promise<void> => {
     const transactions = await getMonthTransactions(date, endDate);
     await getMonthTransactionSumPerType(transactions);
-    const categoryCountArray = await getMonthTransactionCategoryCount(
-      date,
-      endDate,
-    );
-
-    const newBuildGraphArray = (
-      categoryCountArray: [{ category: string; sum: number }] | undefined,
-    ) => {
-      const newChartCountArray = [];
-      if (categoryCountArray !== undefined) {
-        for (let element of categoryCountArray) {
-          newChartCountArray.push([element.category, Number(element.sum)]);
-        }
-        newChartCountArray.unshift(['Categories', 'Transaction Sum']);
-        setChartCountArray(newChartCountArray);
-      }
-    };
-
-    newBuildGraphArray(categoryCountArray);
   };
 
   useEffect(() => {
@@ -166,20 +130,27 @@ export default function BudgetDashboard({ session }: BudgetDashboardType) {
   return (
     <div className={styles.page}>
       <DatePicker date={date} setDate={setDate} setEndDate={setEndDate} />
-      <TotalSpentWidget total={totalIncome - totalExpense} type="Total" />
+      <TotalSpentWidget
+        total={totalIncome - totalExpense}
+        transactionCount={totalExpenseTCount + totalIncomeTCount}
+        type="Total"
+      />
       <div className={styles['total-spent__section']}>
-        <TotalSpentWidget total={totalIncome} type="Income" />
-        <TotalSpentWidget total={totalExpense} type="Expense" />
+        <TotalSpentWidget
+          total={totalIncome}
+          transactionCount={totalIncomeTCount}
+          type="Income"
+        />
+        <TotalSpentWidget
+          total={totalExpense}
+          transactionCount={totalExpenseTCount}
+          type="Expense"
+        />
       </div>
       <div className={styles['information__section']}>
         <div className={styles['information__graph']}>
           <h2>Expenses by Category</h2>
-          {chartCountArray && (
-            <SpendingGraph
-              totalSum={totalExpense}
-              chartCountArray={chartCountArray}
-            />
-          )}
+          <SpendingGraph transactions={data} date={date} />
         </div>
         <div className={styles['transactions__section']}>
           <h2>Recent Transactions</h2>

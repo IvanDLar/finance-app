@@ -1,7 +1,7 @@
 import TransactionWidget from '../TransactionWidget/TransactionWidget';
 import { Transaction } from '@/app/Types/Transactions';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStyletron } from 'styletron-react';
 
 type TransactionsT = Transaction[];
@@ -19,7 +19,6 @@ const TransactionsList = ({ data }: { data: TransactionsT }) => {
   const groupTransactionsPerDate = () => {
     if (!data || !data.length) setTransactionsPerDay([]);
     let transactionsPerDayMap: TransactionsPerDayMapT = {};
-
     for (let transaction of data) {
       let momentDate = moment(transaction.date);
       let momentFormatedDate = momentDate.format('L');
@@ -39,6 +38,7 @@ const TransactionsList = ({ data }: { data: TransactionsT }) => {
     let ascendingOrderedObject: TransactionsPerDayT = Object.entries(
       transactionsPerDayMap,
     ).sort((a, b) => moment(b[0]).diff(moment(a[0])));
+
     setTransactionsPerDay(ascendingOrderedObject);
   };
 
@@ -51,9 +51,8 @@ const TransactionsList = ({ data }: { data: TransactionsT }) => {
       {transactionsPerDay.map((dateTransactions) => {
         const [date, datesArray] = dateTransactions;
         return (
-          <>
+          <React.Fragment key={date}>
             <div
-              key={date}
               className={css({
                 fontSize: '12px',
                 color: '#6B726C',
@@ -68,11 +67,11 @@ const TransactionsList = ({ data }: { data: TransactionsT }) => {
                   amount={transaction.amount}
                   isIncome={transaction.is_income}
                   category={transaction.category}
-                  key={transaction.id}
+                  key={`${transaction.id}`}
                 />
               );
             })}
-          </>
+          </React.Fragment>
         );
       })}
     </div>

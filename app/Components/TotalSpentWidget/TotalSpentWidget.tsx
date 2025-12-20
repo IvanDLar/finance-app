@@ -3,11 +3,13 @@ import styles from './TotalSpentWidget.module.css';
 
 type TotalSpentWidgetProps = {
   total: number;
+  transactionCount: number;
   type?: string;
 };
 
 export default function TotalSpentWidget({
   total,
+  transactionCount,
   type,
 }: TotalSpentWidgetProps) {
   let widgetType;
@@ -29,7 +31,7 @@ export default function TotalSpentWidget({
         ${total.toLocaleString('en-US')}
       </span>
       <span className={`${styles['transaction-count']}`}>
-        X total transactions
+        {transactionCount} transactions
       </span>
     </div>
   );
