@@ -105,11 +105,15 @@ export default function SpendingGraph({
           transaction.amount;
       }
     }
-    const stylesToUse = Object.keys(AVAILABLE_CATEGORIES_STYLES).filter(
-      (category) => {
-        return tempTransactionsPerCategory[category];
-      },
-    );
+
+    // Extract keys first to use on matching styles with category, this ensures
+    // constant matching (Object.keys() extraction does not ensure order)
+    const transactionsPerCategoryKeys =
+      tempTransactionsPerCategory && Object.keys(tempTransactionsPerCategory);
+
+    const stylesToUse = transactionsPerCategoryKeys.filter((category) => {
+      return AVAILABLE_CATEGORIES_STYLES[category];
+    });
 
     const backgroundColorsToUse = stylesToUse.map((category) => {
       return AVAILABLE_CATEGORIES_STYLES[category].backgroundColor;
@@ -120,9 +124,7 @@ export default function SpendingGraph({
     });
 
     const data = {
-      labels: tempTransactionsPerCategory
-        ? Object.keys(tempTransactionsPerCategory)
-        : [],
+      labels: tempTransactionsPerCategory ? transactionsPerCategoryKeys : [],
       datasets: [
         {
           label: 'Total',
